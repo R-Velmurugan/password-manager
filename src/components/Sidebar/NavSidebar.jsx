@@ -18,7 +18,7 @@ export default function NavSidebar(){
                 </li>
                 <li>
                     <lord-icon
-                        src="https://cdn.lordicon.com/dvqeipeg.json"
+                        src="https://cdn.lordicon.com/oxgyjdir.json"
                         trigger="hover">
                     </lord-icon>
                 </li>
