@@ -5,14 +5,14 @@ import PasswordGenerator from "./components/PasswordGenerator";
 function App() {
   return (
       <>
-          <div className="bg-gradient-to-b from-[#2e333d] to-[#22262d] flex ">
+          <main className="bg-gradient-to-b from-[#2e333d] to-[#22262d] flex ">
               <Sidebar/>
               <div className="flex-grow overflow-hidden" >
                   <Routes>
                       <Route path="/generate-password" element={<PasswordGenerator/>} />
                   </Routes>
               </div>
-          </div>
+          </main>
 
       </>
   );
