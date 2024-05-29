@@ -49,7 +49,7 @@ export default function Sidebar() {
             <p className="mt-4 ml-4 text-stone-200">Tools</p>
             <List className=" pl-1 mt-4 ml-4 text-stone-200">
                 <Link to="/generate-password" ><CategoryOption optionName="Password Generator" optionIcon={GENERATE_PASSWORD}/></Link>
-                <CategoryOption optionName="Password Health Check" optionIcon={HEALTH}/>
+                <Link to="/password-health" ><CategoryOption optionName="Password Health" optionIcon={HEALTH}/></Link>
             </List>
         </aside>
     );

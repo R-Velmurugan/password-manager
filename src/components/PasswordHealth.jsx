@@ -1,6 +1,6 @@
 import GppMaybeIcon from "@mui/icons-material/GppMaybe";
 
-export default function PasswordGenerator() {
+export default function PasswordHealth() {
 
     let weakPasswords = 0;
 
