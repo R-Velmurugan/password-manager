@@ -1,6 +1,6 @@
 import Sidebar from "./components/Sidebar/Sidebar";
 import {Route, Routes} from "react-router-dom";
-import PasswordGenerator from "./components/PasswordGenerator";
+import PasswordGenerator from "./components/PasswordGenerator/PasswordGenerator";
 import PasswordHealth from "./components/PasswordHealth";
 
 function App() {
