@@ -69,7 +69,7 @@ export default function PasswordGenerator() {
                                 '& .MuiSlider-rail': {
                                     color: teal[600],
                                 },
-                            }} defaultValue={10} min={8} max={30} valueLabelDisplay="auto"/>
+                            }} defaultValue={15} min={8} max={30} valueLabelDisplay="auto"/>
                     </li>
                     <li>
                         <FormGroup row>

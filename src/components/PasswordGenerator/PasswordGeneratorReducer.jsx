@@ -11,7 +11,7 @@ export const INITIAL_PASSWORD_CONTROLS_STATE = {
     isLowercaseNeeded : true,
     isNumbersNeeded : true,
     isSpecialCharactersNeeded : true,
-    passwordLength : 10,
+    passwordLength : 15,
     passwordStrength : PASSWORD_STRENGTH.STRONG
 }
 
