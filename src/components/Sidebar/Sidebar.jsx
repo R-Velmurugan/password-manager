@@ -7,6 +7,7 @@ import RecentActorsIcon from "@mui/icons-material/RecentActors";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CategoryOption from "./Categories/CategoryOption";
 import {List} from "@mui/material";
+import {Link} from "react-router-dom";
 
 export default function Sidebar() {
 
@@ -29,9 +30,9 @@ export default function Sidebar() {
         </lord-icon>
 
     return (
-        <aside className="w-1/2 md:w-72 bg-stone-600 h-screen font-medium">
+        <aside className="w-64 md:w-72 bg-gradient-to-b from-[#3f444b] to-[#303238] h-screen font-medium">
             <NavSidebar/>
-            <hr className="border-stone-400"/>
+            <hr className="border-stone-600"/>
 
             <p className="mt-4 ml-4 text-stone-200">Categories</p>
             <List className=" pl-1 mt-4 ml-4 text-stone-200">
@@ -43,12 +44,12 @@ export default function Sidebar() {
                 <CategoryOption optionName="Trash" optionIcon={DELETE_ICON}/>
             </List>
 
-            <hr className="border-stone-400"/>
+            <hr className="border-stone-600"/>
 
             <p className="mt-4 ml-4 text-stone-200">Tools</p>
             <List className=" pl-1 mt-4 ml-4 text-stone-200">
-                <CategoryOption optionName="Password Generator" optionIcon={GENERATE_PASSWORD}/>
-                <CategoryOption optionName="Password Health Check" optionIcon={HEALTH}/>
+                <Link to="/generate-password" ><CategoryOption optionName="Password Generator" optionIcon={GENERATE_PASSWORD}/></Link>
+                <Link to="/password-health" ><CategoryOption optionName="Password Health" optionIcon={HEALTH}/></Link>
             </List>
         </aside>
     );
