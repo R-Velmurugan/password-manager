@@ -98,25 +98,30 @@ export const passwordGenerator = (state) => {
     let ALL_CHARACTERS = "";
 
     let password = "";
+    let initialPasswordLength = "";
 
     if(state.isUppercaseNeeded){
         ALL_CHARACTERS += UPPERCASE_LETTERS;
         password += UPPERCASE_LETTERS[Math.floor(Math.random() * UPPERCASE_LETTERS.length)];
+        initialPasswordLength++;
     }
     if(state.isLowercaseNeeded){
         ALL_CHARACTERS += LOWERCASE_LETTERS;
         password += LOWERCASE_LETTERS[Math.floor(Math.random() * LOWERCASE_LETTERS.length)];
+        initialPasswordLength++;
     }
     if(state.isNumbersNeeded){
         ALL_CHARACTERS += NUMBERS;
         password += NUMBERS[Math.floor(Math.random() * NUMBERS.length)];
+        initialPasswordLength++;
     }
     if(state.isSpecialCharactersNeeded){
         ALL_CHARACTERS += SPECIAL_CHARACTERS;
         password += SPECIAL_CHARACTERS[Math.floor(Math.random() * SPECIAL_CHARACTERS.length)];
+        initialPasswordLength++;
     }
 
-    for(let i=4 ; i<state.passwordLength ; i++){
+    for(let i=initialPasswordLength ; i<state.passwordLength ; i++){
         password += ALL_CHARACTERS[Math.floor(Math.random() * ALL_CHARACTERS.length)];
     }
 
