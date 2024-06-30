@@ -2,6 +2,7 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import {Route, Routes} from "react-router-dom";
 import PasswordGenerator from "./components/PasswordGenerator/PasswordGenerator";
 import PasswordHealth from "./components/PasswordHealth";
+import AllPasswords from "./components/AllPasswords";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
               <Sidebar/>
               <div className="flex-grow overflow-hidden" >
                   <Routes>
+                      <Route path="/all-passwords" element={<AllPasswords/>}/>
                       <Route path="/generate-password" element={<PasswordGenerator/>} />
                       <Route path="/password-health" element={<PasswordHealth/>} />
                   </Routes>
