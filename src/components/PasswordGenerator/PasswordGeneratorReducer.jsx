@@ -64,7 +64,6 @@ export const passwordGeneratorReducer = (state , action) => {
             }
         case ACTION_TYPES.CHECK_PASSWORD_STRENGTH :
             let passwordStrength = checkPasswordStrength(state);
-            console.log(passwordStrength);
             return {
                 ...state,
                 passwordStrength : passwordStrength
