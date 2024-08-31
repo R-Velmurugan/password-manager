@@ -3,37 +3,27 @@ import SectionHeader from "./UI/SectionHeader";
 import moment from "moment";
 import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
-
+import AddPassword from "./AddPassword";
+import {useRef} from "react";
+import {getPasswords} from "../resources/request-body/payload"
 const fetchAllPasswords = async () => {
     const response = await axios.post(
-        "http://localhost:8080/graphql",
-        {
-            query:
-                `query{
-                    passwords{
-                        uuid
-                        domain
-                        url
-                        email
-                        updationDate
-                    }
-                }`
-        },
-        {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        }
-
+        getPasswords.url,
+        getPasswords.data,
+        getPasswords.config
     );
     return response.data.data.passwords;
 }
 export default function AllPasswords(){
 
-    const {data , isLoading , isError,error} = useQuery({
+    const {data , isLoading , isError,refetch} = useQuery({
         queryKey : ["passwords"],
         queryFn : fetchAllPasswords
     })
+
+    const refresh = () => refetch();
+
+    const addPasswordRef = useRef();
 
     if(isLoading) return <b>Eh! wait for sometime</b>
     if(isError) {
@@ -41,7 +31,8 @@ export default function AllPasswords(){
     }
 
     return(
-        <section className="text-stone-200 py-2" >
+        <section className="static text-stone-200 py-2" >
+            <AddPassword addPasswordRef={addPasswordRef} refresh={refresh} className="p-4"/>
             <SectionHeader header={"All Passwords"} />
             <ul className="mx-8 p-5 rounded bg-[#343943]">
                 {data.map(entity =>
@@ -60,6 +51,15 @@ export default function AllPasswords(){
                     </li>)
                 }
             </ul>
+            <button onClick={() => addPasswordRef.current.open()} className=" bottom-4 right-5 fixed" >
+                <lord-icon
+                    src="https://cdn.lordicon.com/pdsourfn.json"
+                    trigger="hover"
+                    colors="primary:#000000,secondary:#c67d53,tertiary:#115e59"
+                    style={{width:75 , height:75}}>
+                </lord-icon>
+            </button>
+
         </section>
     );
 }
