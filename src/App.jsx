@@ -9,7 +9,7 @@ const queryClient = new QueryClient();
 function App() {
   return (
       <QueryClientProvider client = {queryClient} >
-          <main className="bg-gradient-to-b from-[#2e333d] to-[#22262d] flex ">
+          <main className="bg-gradient-to-b from-[#2e333d] to-[#22262d] flex min-h-screen">
               <Sidebar/>
               <div className="flex-grow overflow-hidden" >
                   <Routes>

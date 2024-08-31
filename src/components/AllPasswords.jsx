@@ -37,15 +37,17 @@ export default function AllPasswords(){
             <ul className="mx-8 p-5 rounded bg-[#343943]">
                 {data.map(entity =>
                     <li className="py-2" key={entity.uuid}>
-                        <span className="flex items-center justify-between pb-4 cursor-pointer">
+                        <span className="flex items-center justify-between pb-4">
                             <div className="flex items-center" >
                                 {<FaviconFetcher url={entity.url} domainName={entity.domain}/>}
-                                <ul className="p-1 pl-5 text-stone-300">
-                                    <li>{entity.domain}</li>
-                                    <li>{entity.email}</li>
-                                </ul>
+                                <button>
+                                    <ul className="p-1 pl-5 text-stone-300">
+                                        <li className="text-left" >{entity.domain}</li>
+                                        <li>{entity.email}</li>
+                                    </ul>
+                                </button>
                             </div>
-                            <p className="pr-14 text-stone-500" >{moment(entity.updationDate).fromNow()}</p>
+                            <p className="pr-14 text-stone-500">{moment(entity.updationDate).fromNow()}</p>
                         </span>
                         <hr className="border-stone-600 rounded h-1 cursor-none"/>
                     </li>)

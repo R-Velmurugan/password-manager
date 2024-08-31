@@ -30,7 +30,7 @@ export default function Sidebar() {
         </lord-icon>
 
     return (
-        <aside className="w-64 md:w-72 bg-gradient-to-b from-[#3f444b] to-[#303238] h-screen font-medium">
+        <aside className="w-64 md:w-72 bg-gradient-to-b from-[#3f444b] to-[#303238] my-2 rounded-md mx-1 font-medium">
             <NavSidebar/>
             <hr className="border-stone-600"/>
 
