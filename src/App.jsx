@@ -4,8 +4,6 @@ import PasswordGenerator from "./components/PasswordGenerator/PasswordGenerator"
 import PasswordHealth from "./components/PasswordHealth";
 import AllPasswords from "./components/AllPasswords";
 import {QueryClient , QueryClientProvider} from "@tanstack/react-query";
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import axios from "axios";
 
 const queryClient = new QueryClient();
 function App() {
@@ -21,7 +19,7 @@ function App() {
                   </Routes>
               </div>
           </main>
-          <ReactQueryDevtools initialIsOpen={true} />
+          {/*<ReactQueryDevtools initialIsOpen={true} />*/}
       </QueryClientProvider>
   );
 }
