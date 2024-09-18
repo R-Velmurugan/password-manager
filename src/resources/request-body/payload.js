@@ -17,6 +17,17 @@ const getPasswordsQuery = {
     }`
 };
 
+const getPasswordByUUIDQuery =
+    `query GetPassword($uuid : String) {
+  password(uuid : $uuid){
+    domain
+    url
+    username
+    email
+    password
+  }
+}`
+
 const insertPasswordQuery = `mutation InsertPassword($domain : String! , $url : String! , $username : String! , $password : String! , $email : String! , $notes : String){
                     insertPassword(passwordInput : {
                         url :$url
@@ -44,10 +55,16 @@ const getPasswords = {
   "config" : CONFIG
 }
 
+const getPassword = {
+  "url" : URL,
+  "query" : getPasswordByUUIDQuery,
+  "config" : CONFIG
+}
+
 const savePassword = {
   "url" : URL,
   "query" : insertPasswordQuery,
   "config" : CONFIG
 }
 
-export {getPasswords , savePassword};
+export {getPasswords , savePassword , getPassword};
