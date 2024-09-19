@@ -4,7 +4,7 @@ import moment from "moment";
 import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
 import AddPassword from "./AddPassword";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {getPasswords} from "../resources/request-body/payload"
 import Password from "./Password";
 const fetchAllPasswords = async () => {
@@ -16,12 +16,17 @@ const fetchAllPasswords = async () => {
     return response.data.data.passwords;
 }
 export default function AllPasswords(){
-    const [uuid , setUuid] = useState("");
-
+    const [uuid , setUuid] = useState("3db7063d-c3e5-45bf-8f95-65e1a9442af9");
     const {data , isLoading , isError,refetch} = useQuery({
         queryKey : ["passwords"],
         queryFn : fetchAllPasswords,
     })
+    useEffect(() => {
+        if (uuid && showPasswordRef.current) {
+            console.log("Opening modal after uuid update");
+            showPasswordRef.current.open(); // Ensure modal opens after uuid is set
+        }
+    }, [uuid]);
 
     const refresh = () => refetch();
 
@@ -32,17 +37,18 @@ export default function AllPasswords(){
     if(isError) {
         return <b>Bruh</b>
     }
-
     const handleShowPassword = (entity) => {
         setUuid(entity.uuid);
-        if(uuid && showPasswordRef.current) showPasswordRef.current.open();
-
+        if(uuid && showPasswordRef.current){
+            console.log("calling modal")
+            showPasswordRef.current.open();
+        }
     }
 
     return(
         <section className="static text-stone-200 py-2" >
             <AddPassword addPasswordRef={addPasswordRef} refresh={refresh} className="p-4"/>
-            {uuid && <Password showPasswordRef={showPasswordRef} uuid={uuid}/>}
+            <Password showPasswordRef={showPasswordRef} uuid={uuid}/>
             <SectionHeader header={"All Passwords"} />
             <ul className="mx-8 p-5 rounded bg-[#343943]">
                 {data.map(entity =>

@@ -5,6 +5,8 @@ import axios from "axios";
 import {getPassword} from "../resources/request-body/payload";
 import FaviconFetcher from "./UI/FaviconFetcher";
 export default function Password({showPasswordRef , uuid}){
+    console.log(uuid);
+    console.log(showPasswordRef.current);
     const fetchPasswordByID = async () => {
         const response = await axios.post(
             getPassword.url,
@@ -23,21 +25,20 @@ export default function Password({showPasswordRef , uuid}){
     const {data , isLoading , isError} = useQuery({
         queryKey : ["password" , uuid],
         queryFn : fetchPasswordByID,
-    enabled : !!uuid
+        enabled : !!uuid
     })
 
     if(isLoading) return <b>Eh! wait for sometime</b>
     if(isError) {
         return <b>Bruh</b>
     }
-    console.log(data);
     if(data === null){
         return(
             <h1>ERROR</h1>
         );
     }
     return(
-        data && <Modal ref={showPasswordRef} className="focus:outline-none">
+        <Modal ref={showPasswordRef} className="focus:outline-none">
             <Card>
                 <CardHeader sx={{
                     '.MuiCardHeader-title': {
@@ -46,16 +47,16 @@ export default function Password({showPasswordRef , uuid}){
                 }}
                     avatar={
                         <Avatar sx={{bgcolor : 'transparent'}} >
-                            <FaviconFetcher url={data.url} domainName={data.domain} size={64}/>
+                            <FaviconFetcher url={data ? data.url : "localhost"} domainName={data ? data.domain : "localhost"} size={64}/>
                         </Avatar>
                     }
-                    title={data.domain}
+                    title={data ? data.domain : "localhost"}
                 />
                 <Divider variant="middle" />
                 <CardContent>
                     <p className="flex" >
                         <span className="" >Username</span>
-                        <span>{data.username}</span>
+                        <span>{data ? data.username : "user"}</span>
                     </p>
                 </CardContent>
             </Card>
