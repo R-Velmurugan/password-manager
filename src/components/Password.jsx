@@ -3,29 +3,17 @@ import {Avatar, Card, CardContent, CardHeader, Divider, IconButton} from "@mui/m
 import CloseIcon from '@mui/icons-material/Close';
 import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
-import {getPassword} from "../resources/request-body/payload";
+import {getPassword} from "../query/payload";
 import FaviconFetcher from "./UI/FaviconFetcher";
 import {useEffect, useRef} from "react";
+import {fetchPasswordByID} from "../query/queries";
 export default function Password({uuid}){
     const showPasswordRef = useRef();
-    const fetchPasswordByID = async () => {
-        const response = await axios.post(
-            getPassword.url,
-            {
-                query : getPassword.query,
-                variables :
-                    {
-                        "uuid" : uuid
-                    }
-                },
-            getPassword.config
-        )
-        return response.data.data.password;
-    }
+
 
     const {data , isLoading , isError} = useQuery({
         queryKey : ["password" , uuid],
-        queryFn : fetchPasswordByID,
+        queryFn : () => fetchPasswordByID(uuid),
         enabled : !!uuid
     })
 
