@@ -7,6 +7,7 @@ import {useRef, useState} from "react";
 import Password from "./Password";
 import Warning from "./UI/Warning";
 import {fetchAllPasswords} from "../query/queries";
+import EditPassword from "./UI/EditPassword";
 
 export default function AllPasswords(){
     const [uuid , setUuid] = useState("");
@@ -33,7 +34,7 @@ export default function AllPasswords(){
             <AddPassword addEditPasswordRef={addPasswordRef} refresh={refresh} className="p-4"/>
             {uuid && <Password uuid={uuid}/>}
             {deletePasswordUuid && <Warning deleteUuid={deletePasswordUuid} refresh={refresh}/>}
-            {editPasswordUuid && <AddPassword/>}
+            {editPasswordUuid && <EditPassword uuid={editPasswordUuid} refresh={refresh} />}
             <SectionHeader header={"All Passwords"} />
             <ul className="mx-8 p-5 rounded bg-[#343943]">
                 {data.map(entity =>
@@ -51,7 +52,7 @@ export default function AllPasswords(){
                             </div>
                             <div className="flex " >
                                 <p className="pr-14 text-stone-500">{moment(entity.updationDate).fromNow()}</p>
-                                <button onClick={() => setDeletePasswordUuid(entity.uuid)} >
+                                <button onClick={() => setDeletePasswordUuid(entity.uuid)} className="focus:outline-none">
                                     <lord-icon
                                         src="https://cdn.lordicon.com/hjbrplwk.json"
                                         trigger="morph"
@@ -60,7 +61,7 @@ export default function AllPasswords(){
                                         style={{width:25 , height:25}}>
                                     </lord-icon>
                                 </button>
-                                <button onClick={() => console.log(entity.uuid)} className="opacity-0 hover:opacity-100" >
+                                <button onClick={() => setEditPasswordUuid(entity.uuid)} className="opacity-0 hover:opacity-100 focus:outline-none" >
                                     <lord-icon
                                         src="https://cdn.lordicon.com/ylvuooxd.json"
                                         trigger="hover"

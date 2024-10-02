@@ -1,5 +1,5 @@
 import axios from "axios";
-import {deletePassword, getPassword, getPasswords, savePassword} from "./payload";
+import {deletePassword, getPassword, getPasswords, savePassword , updatePassword} from "./payload";
 
 const fetchAllPasswords = async () => {
     const response = await axios.post(
@@ -50,7 +50,6 @@ const fetchPasswordByID = async (uuid) => {
     return response.data.data.password;
 }
 const deletePasswordByUuid = async (deleteUuid) => {
-    console.log(deleteUuid)
     try {
         await axios.post(
             deletePassword.url,
@@ -67,4 +66,22 @@ const deletePasswordByUuid = async (deleteUuid) => {
     }
 }
 
-export {fetchAllPasswords , insertPassword , fetchPasswordByID , deletePasswordByUuid}
+const updatePasswordQuery = async (uuid , password) => {
+    try{
+        await axios.post(
+            updatePassword.url,
+            {
+                query : updatePassword.query,
+                variables : {
+                    "uuid" : uuid,
+                    "password" : password
+                }
+            },
+            updatePassword.config
+        )
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export {fetchAllPasswords , insertPassword , fetchPasswordByID , deletePasswordByUuid , updatePasswordQuery}
