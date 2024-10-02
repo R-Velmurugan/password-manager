@@ -4,7 +4,6 @@ import {useEffect, useRef, useState} from "react";
 import {Button, Divider} from "@mui/material";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {fetchPasswordByID, updatePasswordQuery} from "../../query/queries";
-import {updatePassword} from "../../query/payload";
 
 export default function EditPassword({uuid , refresh}){
     const [error , setError] = useState({

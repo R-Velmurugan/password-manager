@@ -2,8 +2,6 @@ import Modal from "./UI/Modal";
 import {Avatar, Card, CardContent, CardHeader, Divider, IconButton} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import {useQuery} from "@tanstack/react-query";
-import axios from "axios";
-import {getPassword} from "../query/payload";
 import FaviconFetcher from "./UI/FaviconFetcher";
 import {useEffect, useRef} from "react";
 import {fetchPasswordByID} from "../query/queries";

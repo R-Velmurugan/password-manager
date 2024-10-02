@@ -3,8 +3,6 @@ import {Button} from "@mui/material";
 import AutoDeleteIcon from '@mui/icons-material/AutoDelete';
 import {useEffect, useRef} from "react";
 import {useMutation} from "@tanstack/react-query";
-import axios from "axios";
-import {deletePassword} from "../../query/payload";
 import {deletePasswordByUuid} from "../../query/queries";
 
 export default function Warning({deleteUuid , refresh}){

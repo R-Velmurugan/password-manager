@@ -2,9 +2,7 @@ import Modal from "./UI/Modal";
 import Input from "./UI/Input";
 import {Button} from "@mui/material";
 import {useRef} from "react";
-import axios from "axios";
 import {useMutation} from "@tanstack/react-query";
-import {savePassword} from "../query/payload";
 import {insertPassword} from "../query/queries";
 
 export default function AddPassword({addEditPasswordRef , refresh , isEdit = false , uuid = ""}){
