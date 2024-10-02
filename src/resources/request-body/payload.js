@@ -49,6 +49,10 @@ const insertPasswordQuery = `mutation InsertPassword($domain : String! , $url : 
                     }
                 }`;
 
+const deletePasswordQuery = `mutation DeletePassword($uuid :String!){
+                                      deletePassword(uuid : $uuid)
+                                    }`
+
 const getPasswords = {
   "url" : URL,
   "data" : getPasswordsQuery,
@@ -67,4 +71,10 @@ const savePassword = {
   "config" : CONFIG
 }
 
-export {getPasswords , savePassword , getPassword};
+const deletePassword = {
+  "url" : URL,
+  "query" : deletePasswordQuery,
+  "config" : CONFIG
+}
+
+export {getPasswords , savePassword , getPassword , deletePassword};

@@ -4,7 +4,7 @@ import HttpsIcon from "@mui/icons-material/Https";
 import DescriptionIcon from "@mui/icons-material/Description";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import RecentActorsIcon from "@mui/icons-material/RecentActors";
-import DeleteIcon from "@mui/icons-material/Delete";
+import AutoDeleteIcon from '@mui/icons-material/AutoDelete';
 import CategoryOption from "./Categories/CategoryOption";
 import {List} from "@mui/material";
 import {Link} from "react-router-dom";
@@ -16,7 +16,7 @@ export default function Sidebar() {
     const DESCRIPTION_ICON = <DescriptionIcon className="text-stone-200"/>
     const CREDIT_CARD_ICON = <CreditCardIcon className="text-stone-200"/>
     const PERSONAL_INFO_ICON = <RecentActorsIcon className="text-stone-200"/>
-    const DELETE_ICON = <DeleteIcon className="text-stone-200"/>
+    const DELETE_ICON = <AutoDeleteIcon className="text-stone-200"/>
 
     const GENERATE_PASSWORD =
         <lord-icon

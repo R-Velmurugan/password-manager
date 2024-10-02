@@ -7,6 +7,7 @@ import AddPassword from "./AddPassword";
 import {useRef, useState} from "react";
 import {getPasswords} from "../resources/request-body/payload"
 import Password from "./Password";
+import Warning from "./UI/Warning";
 const fetchAllPasswords = async () => {
     const response = await axios.post(
         getPasswords.url,
@@ -17,6 +18,8 @@ const fetchAllPasswords = async () => {
 }
 export default function AllPasswords(){
     const [uuid , setUuid] = useState("");
+    const [deletePassword , setDeletePassword] = useState("");
+
     const {data , isLoading , isError,refetch} = useQuery({
         queryKey : ["passwords"],
         queryFn : fetchAllPasswords,
@@ -36,6 +39,7 @@ export default function AllPasswords(){
         <section className="static text-stone-200 py-2" >
             <AddPassword addPasswordRef={addPasswordRef} refresh={refresh} className="p-4"/>
             {uuid && <Password uuid={uuid}/>}
+            {deletePassword && <Warning deleteUuid={deletePassword} refresh={refresh}/>}
             <SectionHeader header={"All Passwords"} />
             <ul className="mx-8 p-5 rounded bg-[#343943]">
                 {data.map(entity =>
@@ -51,7 +55,18 @@ export default function AllPasswords(){
                                     </ul>
                                 </button>
                             </div>
-                            <p className="pr-14 text-stone-500">{moment(entity.updationDate).fromNow()}</p>
+                            <div className="flex " >
+                                <p className="pr-14 text-stone-500">{moment(entity.updationDate).fromNow()}</p>
+                                <button onClick={() => setDeletePassword(entity.uuid)} >
+                                    <lord-icon
+                                        src="https://cdn.lordicon.com/hjbrplwk.json"
+                                        trigger="morph"
+                                        state="morph-trash-in"
+                                        colors="primary:#000000,secondary:#848484,tertiary:#ebe6ef,quaternary:#3a3347"
+                                        style={{width:25 , height:25}}>
+                                    </lord-icon>
+                                </button>
+                            </div>
                         </span>
                         <hr className="border-stone-600 rounded h-1 cursor-none"/>
                     </li>)
