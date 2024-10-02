@@ -3,8 +3,7 @@ import {Button} from "@mui/material";
 import AutoDeleteIcon from '@mui/icons-material/AutoDelete';
 import {useEffect, useRef} from "react";
 import {useMutation} from "@tanstack/react-query";
-import axios from "axios";
-import {deletePassword} from "../../resources/request-body/payload";
+import {deletePasswordByUuid} from "../../query/queries";
 
 export default function Warning({deleteUuid , refresh}){
     const showWarningRef = useRef();
@@ -12,26 +11,10 @@ export default function Warning({deleteUuid , refresh}){
         showWarningRef.current.open();
     }, [deleteUuid]);
 
-    const deletePasswordByUuid = async () => {
-        console.log(deleteUuid)
-        try {
-            await axios.post(
-                deletePassword.url,
-                {
-                    query : deletePassword.query,
-                    variables : {
-                        "uuid" : deleteUuid
-                    }
-                },
-                deletePassword.config
-            )
-        }catch (error){
-            console.log(error)
-        }
-    }
+
 
     const deletePasswordMutation = useMutation({
-        mutationFn : deletePasswordByUuid,
+        mutationFn : () => deletePasswordByUuid(deleteUuid),
         onSuccess : () => {
             showWarningRef.current.close();
             refresh()

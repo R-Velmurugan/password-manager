@@ -53,6 +53,10 @@ const deletePasswordQuery = `mutation DeletePassword($uuid :String!){
                                       deletePassword(uuid : $uuid)
                                     }`
 
+const updatePasswordQuery = `mutation UpdatePassword($uuid : String! , $password : String!){
+                                      updatePassword(uuid : $uuid , password : $password)
+                                    }`
+
 const getPasswords = {
   "url" : URL,
   "data" : getPasswordsQuery,
@@ -77,4 +81,10 @@ const deletePassword = {
   "config" : CONFIG
 }
 
-export {getPasswords , savePassword , getPassword , deletePassword};
+const updatePassword = {
+  "url" : URL,
+  "query" : updatePasswordQuery,
+  "config" : CONFIG
+}
+
+export {getPasswords , savePassword , getPassword , deletePassword , updatePassword};

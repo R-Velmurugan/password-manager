@@ -2,11 +2,10 @@ import Modal from "./UI/Modal";
 import Input from "./UI/Input";
 import {Button} from "@mui/material";
 import {useRef} from "react";
-import axios from "axios";
 import {useMutation} from "@tanstack/react-query";
-import {savePassword} from "../resources/request-body/payload";
+import {insertPassword} from "../query/queries";
 
-export default function AddPassword({addPasswordRef , refresh}){
+export default function AddPassword({addEditPasswordRef , refresh}){
     const formRef = useRef();
     const domainNameRef = useRef();
     const urlRef = useRef();
@@ -15,42 +14,26 @@ export default function AddPassword({addPasswordRef , refresh}){
     const emailRef = useRef();
     const notesRef = useRef();
 
-    const insertPassword = async () => {
-        try {
-            await axios.post(
-                savePassword.url,
-                {
-                    query:savePassword.query,
-                    variables:
-                        {
-                            "domain": domainNameRef.current.value,
-                            "url": urlRef.current.value,
-                            "username": usernameRef.current.value,
-                            "email": emailRef.current.value,
-                            "password": passwordRef.current.value,
-                            "notes": notesRef.current.value
-                        }
 
-                },
-                savePassword.config
-            );
-        } catch (error){
-            console.log(domainNameRef.current)
-            console.log(error)
-        }
-    }
 
     const mutation = useMutation({
-        mutationFn : insertPassword,
+        mutationFn : () => insertPassword(
+            domainNameRef,
+            urlRef,
+            usernameRef,
+            emailRef,
+            passwordRef,
+            notesRef
+        ),
         onSuccess : () => {
-            addPasswordRef.current.close()
+            addEditPasswordRef.current.close()
             refresh();
         },
         onError : () => console.log("error")
     })
 
     return(
-        <Modal ref={addPasswordRef} className= "rounded w-2/5 bg-gray-50 mr-72 backdrop:bg-gray-400 backdrop:bg-opacity-50">
+        <Modal ref={addEditPasswordRef} className= "rounded w-2/5 bg-stone-200 mr-72 backdrop:bg-gray-400 backdrop:bg-opacity-50">
             <form ref={formRef} method="dialog" className="px-5">
                 <Input ref={domainNameRef} label="Domain Name" />
                 <Input ref={urlRef} type = "url"  label="URL" />
@@ -61,7 +44,7 @@ export default function AddPassword({addPasswordRef , refresh}){
                 <footer className="flex gap-4 pb-2 justify-center">
                     <Button variant="outlined" onClick={() => {
                         formRef.current.reset();
-                        addPasswordRef.current.close();
+                        addEditPasswordRef.current.close();
                     }}>Cancel</Button>
                     <Button variant="contained" onClick={() => mutation.mutate()}>Save</Button>
                 </footer>

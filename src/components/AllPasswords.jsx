@@ -2,23 +2,17 @@ import FaviconFetcher from "./UI/FaviconFetcher";
 import SectionHeader from "./UI/SectionHeader";
 import moment from "moment";
 import {useQuery} from "@tanstack/react-query";
-import axios from "axios";
 import AddPassword from "./AddPassword";
 import {useRef, useState} from "react";
-import {getPasswords} from "../resources/request-body/payload"
 import Password from "./Password";
 import Warning from "./UI/Warning";
-const fetchAllPasswords = async () => {
-    const response = await axios.post(
-        getPasswords.url,
-        getPasswords.data,
-        getPasswords.config
-    );
-    return response.data.data.passwords;
-}
+import {fetchAllPasswords} from "../query/queries";
+import EditPassword from "./UI/EditPassword";
+
 export default function AllPasswords(){
     const [uuid , setUuid] = useState("");
-    const [deletePassword , setDeletePassword] = useState("");
+    const [deletePasswordUuid , setDeletePasswordUuid] = useState("");
+    const [editPasswordUuid , setEditPasswordUuid] = useState("");
 
     const {data , isLoading , isError,refetch} = useQuery({
         queryKey : ["passwords"],
@@ -37,9 +31,10 @@ export default function AllPasswords(){
 
     return(
         <section className="static text-stone-200 py-2" >
-            <AddPassword addPasswordRef={addPasswordRef} refresh={refresh} className="p-4"/>
+            <AddPassword addEditPasswordRef={addPasswordRef} refresh={refresh} className="p-4"/>
             {uuid && <Password uuid={uuid}/>}
-            {deletePassword && <Warning deleteUuid={deletePassword} refresh={refresh}/>}
+            {deletePasswordUuid && <Warning deleteUuid={deletePasswordUuid} refresh={refresh}/>}
+            {editPasswordUuid && <EditPassword uuid={editPasswordUuid} refresh={refresh} />}
             <SectionHeader header={"All Passwords"} />
             <ul className="mx-8 p-5 rounded bg-[#343943]">
                 {data.map(entity =>
@@ -57,12 +52,20 @@ export default function AllPasswords(){
                             </div>
                             <div className="flex " >
                                 <p className="pr-14 text-stone-500">{moment(entity.updationDate).fromNow()}</p>
-                                <button onClick={() => setDeletePassword(entity.uuid)} >
+                                <button onClick={() => setDeletePasswordUuid(entity.uuid)} className="focus:outline-none">
                                     <lord-icon
                                         src="https://cdn.lordicon.com/hjbrplwk.json"
                                         trigger="morph"
                                         state="morph-trash-in"
                                         colors="primary:#000000,secondary:#848484,tertiary:#ebe6ef,quaternary:#3a3347"
+                                        style={{width:25 , height:25}}>
+                                    </lord-icon>
+                                </button>
+                                <button onClick={() => setEditPasswordUuid(entity.uuid)} className="opacity-0 hover:opacity-100 focus:outline-none" >
+                                    <lord-icon
+                                        src="https://cdn.lordicon.com/ylvuooxd.json"
+                                        trigger="hover"
+                                        colors="primary:#fae6d1,secondary:#e83a30,tertiary:#ffc738,quaternary:#000000"
                                         style={{width:25 , height:25}}>
                                     </lord-icon>
                                 </button>
