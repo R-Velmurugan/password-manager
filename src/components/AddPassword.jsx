@@ -5,7 +5,7 @@ import {useRef} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {insertPassword} from "../query/queries";
 
-export default function AddPassword({addEditPasswordRef , refresh , isEdit = false , uuid = ""}){
+export default function AddPassword({addEditPasswordRef , refresh}){
     const formRef = useRef();
     const domainNameRef = useRef();
     const urlRef = useRef();
