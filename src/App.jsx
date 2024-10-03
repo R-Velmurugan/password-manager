@@ -4,6 +4,7 @@ import PasswordGenerator from "./components/PasswordGenerator/PasswordGenerator"
 import PasswordHealth from "./components/PasswordHealth";
 import AllPasswords from "./components/AllPasswords";
 import {QueryClient , QueryClientProvider} from "@tanstack/react-query";
+import Trash from "./components/Trash";
 
 const queryClient = new QueryClient();
 function App() {
@@ -16,6 +17,7 @@ function App() {
                       <Route path="/all-passwords" element={<AllPasswords/>}/>
                       <Route path="/generate-password" element={<PasswordGenerator/>} />
                       <Route path="/password-health" element={<PasswordHealth/>} />
+                      <Route path="/trash" element={<Trash/>}/>
                   </Routes>
               </div>
           </main>

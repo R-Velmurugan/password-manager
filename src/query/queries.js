@@ -1,10 +1,15 @@
 import axios from "axios";
 import {deletePassword, getPassword, getPasswords, savePassword , updatePassword} from "./payload";
 
-const fetchAllPasswords = async () => {
+const fetchAllPasswords = async (isActive) => {
     const response = await axios.post(
         getPasswords.url,
-        getPasswords.data,
+        {
+            query : getPasswords.query,
+            variables : {
+                "isActive" : isActive
+            }
+        },
         getPasswords.config
     );
     return response.data.data.passwords;
