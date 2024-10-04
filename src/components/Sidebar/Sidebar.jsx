@@ -2,7 +2,6 @@ import NavSidebar from "./NavSidebar";
 import AppsIcon from "@mui/icons-material/Apps";
 import HttpsIcon from "@mui/icons-material/Https";
 import DescriptionIcon from "@mui/icons-material/Description";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
 import RecentActorsIcon from "@mui/icons-material/RecentActors";
 import AutoDeleteIcon from '@mui/icons-material/AutoDelete';
 import CategoryOption from "./Categories/CategoryOption";
@@ -14,7 +13,6 @@ export default function Sidebar() {
     const APPS_ICON = <AppsIcon className="text-stone-200"/>
     const PASSWORD_LOCK = <HttpsIcon className="text-stone-200"/>
     const DESCRIPTION_ICON = <DescriptionIcon className="text-stone-200"/>
-    const CREDIT_CARD_ICON = <CreditCardIcon className="text-stone-200"/>
     const PERSONAL_INFO_ICON = <RecentActorsIcon className="text-stone-200"/>
     const DELETE_ICON = <AutoDeleteIcon className="text-stone-200"/>
 
@@ -39,7 +37,6 @@ export default function Sidebar() {
                 <CategoryOption optionName="All Items" optionIcon={APPS_ICON}/>
                 <Link to="/all-passwords"><CategoryOption optionName="Passwords" optionIcon={PASSWORD_LOCK}/></Link>
                 <CategoryOption optionName="Secure Notes" optionIcon={DESCRIPTION_ICON}/>
-                <CategoryOption optionName="Credit Cards" optionIcon={CREDIT_CARD_ICON}/>
                 <CategoryOption optionName="Personal Info" optionIcon={PERSONAL_INFO_ICON}/>
                 <Link to="/trash"><CategoryOption optionName="Trash" optionIcon={DELETE_ICON}/></Link>
             </List>
