@@ -41,7 +41,7 @@ export default function Sidebar() {
                 <CategoryOption optionName="Secure Notes" optionIcon={DESCRIPTION_ICON}/>
                 <CategoryOption optionName="Credit Cards" optionIcon={CREDIT_CARD_ICON}/>
                 <CategoryOption optionName="Personal Info" optionIcon={PERSONAL_INFO_ICON}/>
-                <CategoryOption optionName="Trash" optionIcon={DELETE_ICON}/>
+                <Link to="/trash"><CategoryOption optionName="Trash" optionIcon={DELETE_ICON}/></Link>
             </List>
 
             <hr className="border-stone-600"/>

@@ -4,10 +4,9 @@ const CONFIG = {
     'Content-Type': 'application/json',
   },
 };
-const getPasswordsQuery = {
-  query:
-    `query{
-        passwords{
+const getPasswordsQuery =
+    `query AllPasswords($isActive : Boolean){
+        passwords(isActive : $isActive){
             uuid
             domain
             url
@@ -15,7 +14,6 @@ const getPasswordsQuery = {
             updationDate
         }
     }`
-};
 
 const getPasswordByUUIDQuery =
     `query GetPassword($uuid : String) {
@@ -59,7 +57,7 @@ const updatePasswordQuery = `mutation UpdatePassword($uuid : String! , $password
 
 const getPasswords = {
   "url" : URL,
-  "data" : getPasswordsQuery,
+  "query" : getPasswordsQuery,
   "config" : CONFIG
 }
 
