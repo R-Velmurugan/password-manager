@@ -5,9 +5,9 @@ import {useQuery} from "@tanstack/react-query";
 import AddPassword from "./AddPassword";
 import {useRef, useState} from "react";
 import Password from "./Password";
-import Warning from "./UI/Warning";
+import Warning from "./Warning";
 import {fetchAllPasswords} from "../query/queries";
-import EditPassword from "./UI/EditPassword";
+import EditPassword from "./EditPassword";
 
 export default function AllPasswords(){
     const [uuid , setUuid] = useState("");
@@ -32,9 +32,9 @@ export default function AllPasswords(){
     return(
         <section className="static text-stone-200 py-2" >
             <AddPassword addEditPasswordRef={addPasswordRef} refresh={refresh} className="p-4"/>
-            {uuid && <Password uuid={uuid}/>}
-            {deletePasswordUuid && <Warning deleteUuid={deletePasswordUuid} refresh={refresh}/>}
-            {editPasswordUuid && <EditPassword uuid={editPasswordUuid} refresh={refresh} />}
+            {uuid && <Password uuid={uuid} setUuid={setUuid}/>}
+            {deletePasswordUuid && <Warning deleteUuid={deletePasswordUuid} setDeleteUuid={setDeletePasswordUuid} refresh={refresh}/>}
+            {editPasswordUuid && <EditPassword uuid={editPasswordUuid} setEditPasswordUuid={setEditPasswordUuid} refresh={refresh} />}
             <SectionHeader header={"All Passwords"} />
             <ul className="mx-8 p-5 rounded bg-[#343943]">
                 {data.map(entity =>

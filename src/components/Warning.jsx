@@ -1,11 +1,11 @@
-import Modal from "./Modal";
+import Modal from "./UI/Modal";
 import {Button} from "@mui/material";
 import AutoDeleteIcon from '@mui/icons-material/AutoDelete';
 import {useEffect, useRef} from "react";
 import {useMutation} from "@tanstack/react-query";
-import {deletePasswordByUuid} from "../../query/queries";
+import {deletePasswordByUuid} from "../query/queries";
 
-export default function Warning({deleteUuid , refresh}){
+export default function Warning({deleteUuid, setDeleteUuid , refresh}){
     const showWarningRef = useRef();
     useEffect(() => {
         showWarningRef.current.open();
@@ -17,6 +17,7 @@ export default function Warning({deleteUuid , refresh}){
         mutationFn : () => deletePasswordByUuid(deleteUuid),
         onSuccess : () => {
             showWarningRef.current.close();
+            setDeleteUuid("");
             refresh()
         },
         onError : () => console.log("error")

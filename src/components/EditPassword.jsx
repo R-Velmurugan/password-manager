@@ -1,11 +1,11 @@
-import Modal from "./Modal";
-import Input from "./Input";
+import Modal from "./UI/Modal";
+import Input from "./UI/Input";
 import {useEffect, useRef, useState} from "react";
 import {Button, Divider} from "@mui/material";
 import {useMutation, useQuery} from "@tanstack/react-query";
-import {fetchPasswordByID, updatePasswordQuery} from "../../query/queries";
+import {fetchPasswordByID, updatePasswordQuery} from "../query/queries";
 
-export default function EditPassword({uuid , refresh}){
+export default function EditPassword({uuid , setEditPasswordUuid , refresh}){
     const [error , setError] = useState({
         css : "",
         errorMessage : ""
@@ -24,6 +24,7 @@ export default function EditPassword({uuid , refresh}){
         mutationFn : () => updatePasswordQuery(uuid , newPasswordRetypeRef.current.value),
         onSuccess : () => {
             editPasswordRef.current.close();
+            setEditPasswordUuid("");
             refresh();
         },
         onError : () => console.log("error")
