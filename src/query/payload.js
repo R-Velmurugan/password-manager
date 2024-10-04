@@ -54,6 +54,9 @@ const deletePasswordQuery = `mutation DeletePassword($uuid :String!){
 const updatePasswordQuery = `mutation UpdatePassword($uuid : String! , $password : String!){
                                       updatePassword(uuid : $uuid , password : $password)
                                     }`
+const restorePasswordQuery = `mutation RestorePassword($uuid : String!){
+                                      restorePassword(uuid : $uuid)
+                                    }`
 
 const getPasswords = {
   "url" : URL,
@@ -85,4 +88,10 @@ const updatePassword = {
   "config" : CONFIG
 }
 
-export {getPasswords , savePassword , getPassword , deletePassword , updatePassword};
+const restorePassword = {
+  "url" : URL,
+  "query" : restorePasswordQuery,
+  "config" : CONFIG
+}
+
+export {getPasswords , savePassword , getPassword , deletePassword , updatePassword , restorePassword};

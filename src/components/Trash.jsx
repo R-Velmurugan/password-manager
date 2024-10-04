@@ -5,13 +5,20 @@ import {useQuery} from "@tanstack/react-query";
 import {fetchAllPasswords} from "../query/queries";
 import {useState} from "react";
 import Password from "./Password";
+import RevertPassword from "./RevertPassword";
 
 export default function Trash(){
     const [uuid , setUuid] = useState("");
-    const {data , isLoading , isError} = useQuery({
+    const [revertUuid , setRevertUuid] = useState({
+        uuid : "",
+        domainName : ""
+    });
+    const {data , isLoading , isError , refetch} = useQuery({
         queryKey : ["passwords"],
         queryFn : () => fetchAllPasswords(false),
     })
+
+    console.log(data);
 
     if(isLoading) return <b>Eh! wait for sometime</b>
     if(isError) {
@@ -22,6 +29,7 @@ export default function Trash(){
         <section className="w-full text-stone-200 py-2">
             <SectionHeader header="Trash"/>
             {uuid && <Password uuid={uuid}/>}
+            {revertUuid.uuid && <RevertPassword revertUuid={revertUuid.uuid} domainName={revertUuid.domainName} refresh={refetch} setRevertUuid={setRevertUuid}/>}
             <ul className="mx-8 p-5 rounded bg-[#343943]">
                 {data.map(entity =>
                     <li className="py-2" key={entity.uuid}>
@@ -38,6 +46,13 @@ export default function Trash(){
                             </div>
                             <div className="flex ">
                                 <p className="pr-14 text-stone-500">{moment(entity.updationDate).fromNow()}</p>
+                                <button onClick={() => setRevertUuid({uuid: entity.uuid , domainName: entity.domain})} >
+                                    <lord-icon
+                                        src="https://cdn.lordicon.com/sskjoohc.json"
+                                        trigger="hover"
+                                        style={{width: 30, height: 30 , marginRight : 10}}>
+                                    </lord-icon>
+                                </button>
                             </div>
                         </span>
                         <hr className="border-stone-600 rounded h-1 cursor-none"/>

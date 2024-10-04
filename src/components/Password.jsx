@@ -5,7 +5,7 @@ import {useQuery} from "@tanstack/react-query";
 import FaviconFetcher from "./UI/FaviconFetcher";
 import {useEffect, useRef} from "react";
 import {fetchPasswordByID} from "../query/queries";
-export default function Password({uuid}){
+export default function Password({uuid , setUuid}){
     const showPasswordRef = useRef();
 
 
@@ -45,7 +45,10 @@ export default function Password({uuid}){
                     }
                     title={data ? <a href={data.url} rel="noreferrer" target="_blank" >{data.domain}</a> : "localhost"}
                     action={
-                        <IconButton onClick={() => showPasswordRef.current.close()} >
+                        <IconButton onClick={() => {
+                            showPasswordRef.current.close();
+                            setUuid("");
+                        }} >
                             <CloseIcon/>
                         </IconButton>
                     }
