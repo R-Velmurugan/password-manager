@@ -61,7 +61,7 @@ export default function AllPasswords(){
                                         style={{width:25 , height:25}}>
                                     </lord-icon>
                                 </button>
-                                <button onClick={() => setEditPasswordUuid(entity.uuid)} className="opacity-0 hover:opacity-100 focus:outline-none" >
+                                <button onClick={() => setEditPasswordUuid(entity.uuid)}>
                                     <lord-icon
                                         src="https://cdn.lordicon.com/ylvuooxd.json"
                                         trigger="hover"
