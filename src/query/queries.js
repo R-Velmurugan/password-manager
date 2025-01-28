@@ -1,5 +1,5 @@
 import axios from "axios";
-import {deletePassword, getPassword, getPasswords, restorePassword, savePassword, updatePassword} from "./payload";
+import {deletePassword, getPassword, getPasswords, restorePassword, savePassword, updatePassword , loginData} from "./payload";
 
 const fetchAllPasswords = async (isActive) => {
     const response = await axios.post(
@@ -106,4 +106,23 @@ const restorePasswordQuery = async (uuid) => {
     }
 }
 
-export {fetchAllPasswords , insertPassword , fetchPasswordByID , deletePasswordByUuid , updatePasswordQuery , restorePasswordQuery}
+const login = async (username , password) => {
+    const credentials = new URLSearchParams();
+    credentials.append("username" , username.current.value);
+    credentials.append("password" , password.current.value);
+    try {
+        await axios.post(
+            loginData.url,
+            credentials,
+            {
+                headers : {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                }
+            }
+        )
+    }catch (error) {
+        console.log(error);
+    }
+}
+
+export {fetchAllPasswords , insertPassword , fetchPasswordByID , deletePasswordByUuid , updatePasswordQuery , restorePasswordQuery , login}

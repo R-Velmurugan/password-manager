@@ -1,4 +1,5 @@
-const URL = "http://localhost:8080/graphql";
+const GRAPHQL_URL = "http://localhost:8080/graphql";
+const LOGIN_URL = "http://localhost:8080/login";
 const CONFIG = {
   headers: {
     'Content-Type': 'application/json',
@@ -59,39 +60,43 @@ const restorePasswordQuery = `mutation RestorePassword($uuid : String!){
                                     }`
 
 const getPasswords = {
-  "url" : URL,
+  "url" : GRAPHQL_URL,
   "query" : getPasswordsQuery,
   "config" : CONFIG
 }
 
 const getPassword = {
-  "url" : URL,
+  "url" : GRAPHQL_URL,
   "query" : getPasswordByUUIDQuery,
   "config" : CONFIG
 }
 
 const savePassword = {
-  "url" : URL,
+  "url" : GRAPHQL_URL,
   "query" : insertPasswordQuery,
   "config" : CONFIG
 }
 
 const deletePassword = {
-  "url" : URL,
+  "url" : GRAPHQL_URL,
   "query" : deletePasswordQuery,
   "config" : CONFIG
 }
 
 const updatePassword = {
-  "url" : URL,
+  "url" : GRAPHQL_URL,
   "query" : updatePasswordQuery,
   "config" : CONFIG
 }
 
 const restorePassword = {
-  "url" : URL,
+  "url" : GRAPHQL_URL,
   "query" : restorePasswordQuery,
   "config" : CONFIG
 }
 
-export {getPasswords , savePassword , getPassword , deletePassword , updatePassword , restorePassword};
+const loginData = {
+  "url" : LOGIN_URL
+}
+
+export {getPasswords , savePassword , getPassword , deletePassword , updatePassword , restorePassword , loginData};
