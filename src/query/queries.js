@@ -106,22 +106,24 @@ const restorePasswordQuery = async (uuid) => {
     }
 }
 
-const login = async (username , password) => {
+const login = async (username , password , setIsLoggedIn) => {
     const credentials = new URLSearchParams();
     credentials.append("username" , username.current.value);
     credentials.append("password" , password.current.value);
     try {
-        await axios.post(
+        const response = await axios.post(
             loginData.url,
             credentials,
-            {
-                headers : {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                }
-            }
+            loginData
         )
+        if(200 === response.status){
+            setIsLoggedIn(true);
+        }
+        else{
+            setIsLoggedIn(false);
+        }
     }catch (error) {
-        console.log(error);
+        setIsLoggedIn(false);
     }
 }
 

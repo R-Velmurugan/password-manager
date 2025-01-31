@@ -4,6 +4,7 @@ const CONFIG = {
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials : true
 };
 const getPasswordsQuery =
     `query AllPasswords($isActive : Boolean){
@@ -96,7 +97,13 @@ const restorePassword = {
 }
 
 const loginData = {
-  "url" : LOGIN_URL
+  "url" : LOGIN_URL,
+  "config" : {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    withCredentials : true
+  }
 }
 
 export {getPasswords , savePassword , getPassword , deletePassword , updatePassword , restorePassword , loginData};
