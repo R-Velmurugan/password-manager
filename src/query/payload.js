@@ -1,5 +1,6 @@
 const GRAPHQL_URL = "http://localhost:8080/graphql";
 const LOGIN_URL = "http://localhost:8080/login";
+const IS_LOGGED_IN = "http://localhost:8080/isLoggedIn"
 const CONFIG = {
   headers: {
     'Content-Type': 'application/json',
@@ -106,4 +107,14 @@ const loginData = {
   }
 }
 
-export {getPasswords , savePassword , getPassword , deletePassword , updatePassword , restorePassword , loginData};
+const isLoggedIn = {
+  "url" : IS_LOGGED_IN,
+  "config" : {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    withCredentials : true
+  }
+}
+
+export {getPasswords , savePassword , getPassword , deletePassword , updatePassword , restorePassword , loginData , isLoggedIn};

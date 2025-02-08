@@ -12,7 +12,6 @@ export default function Login({setIsLoggedIn}) {
         queryFn : () => login(userNameRef , passwordRef , setIsLoggedIn),
         enabled: false
     })
-    console.log(data)
     return (
         <section className="relative m-auto border border-solid border-slate-800 rounded-md bg-gradient-to-b from-[#050E18] via-[#04111F] to-[#050E18]">
             <h1 className="text-stone-200 p-2 font-bold flex items-center">

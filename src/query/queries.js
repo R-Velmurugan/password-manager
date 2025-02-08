@@ -1,5 +1,5 @@
 import axios from "axios";
-import {deletePassword, getPassword, getPasswords, restorePassword, savePassword, updatePassword , loginData} from "./payload";
+import {deletePassword, getPassword, getPasswords, restorePassword, savePassword, updatePassword , loginData , isLoggedIn} from "./payload";
 
 const fetchAllPasswords = async (isActive) => {
     const response = await axios.post(
@@ -127,4 +127,23 @@ const login = async (username , password , setIsLoggedIn) => {
     }
 }
 
-export {fetchAllPasswords , insertPassword , fetchPasswordByID , deletePasswordByUuid , updatePasswordQuery , restorePasswordQuery , login}
+const isValidSessionPresent = async (setIsLoggedIn) => {
+    try{
+        const response = await axios.post(
+            'http://localhost:8080/isLoggedIn',  // The URL to check the session
+            null,  // You don't need to send a body, just check the session
+            {
+                withCredentials: true,  // This ensures cookies (like JSESSIONID) are sent with the request
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",  // Set the content type as required
+                }
+            }
+        )
+        if(200 === response.status) setIsLoggedIn(true);
+        else setIsLoggedIn(false);
+    }catch (error) {
+        setIsLoggedIn(false);
+    }
+}
+
+export {fetchAllPasswords , insertPassword , fetchPasswordByID , deletePasswordByUuid , updatePasswordQuery , restorePasswordQuery , login , isValidSessionPresent}
