@@ -130,12 +130,12 @@ const login = async (username , password , setIsLoggedIn) => {
 const isValidSessionPresent = async (setIsLoggedIn) => {
     try{
         const response = await axios.post(
-            'http://localhost:8080/isLoggedIn',  // The URL to check the session
-            null,  // You don't need to send a body, just check the session
+            'http://localhost:8080/isLoggedIn',
+            null,
             {
-                withCredentials: true,  // This ensures cookies (like JSESSIONID) are sent with the request
+                withCredentials: true,
                 headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",  // Set the content type as required
+                    "Content-Type": "application/x-www-form-urlencoded",
                 }
             }
         )
