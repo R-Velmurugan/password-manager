@@ -1,5 +1,5 @@
 import axios from "axios";
-import {deletePassword, getPassword, getPasswords, restorePassword, savePassword, updatePassword , loginData , isLoggedIn} from "./payload";
+import {deletePassword, getPassword, getPasswords, restorePassword, savePassword, updatePassword , loginData , isLoggedIn , logout} from "./payload";
 
 const fetchAllPasswords = async (isActive) => {
     const response = await axios.post(
@@ -130,14 +130,16 @@ const login = async (username , password , setIsLoggedIn) => {
 const isValidSessionPresent = async (setIsLoggedIn) => {
     try{
         const response = await axios.post(
-            'http://localhost:8080/isLoggedIn',
+            // 'http://localhost:8080/isLoggedIn',
+            isLoggedIn.url,
             null,
-            {
-                withCredentials: true,
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                }
-            }
+            // {
+            //     withCredentials: true,
+            //     headers: {
+            //         "Content-Type": "application/x-www-form-urlencoded",
+            //     }
+            // }
+            isLoggedIn.config
         )
         if(200 === response.status) setIsLoggedIn(true);
         else setIsLoggedIn(false);
@@ -146,4 +148,18 @@ const isValidSessionPresent = async (setIsLoggedIn) => {
     }
 }
 
-export {fetchAllPasswords , insertPassword , fetchPasswordByID , deletePasswordByUuid , updatePasswordQuery , restorePasswordQuery , login , isValidSessionPresent}
+const removeSession = async (setIsLoggedIn) => {
+    try{
+        const response = await axios.post(
+            logout.url,
+            null,
+            logout.config
+        )
+        if(200 === response.status) setIsLoggedIn(false);
+        else setIsLoggedIn(true);
+    } catch (error){
+        setIsLoggedIn(true);
+    }
+}
+
+export {fetchAllPasswords , insertPassword , fetchPasswordByID , deletePasswordByUuid , updatePasswordQuery , restorePasswordQuery , login , isValidSessionPresent , removeSession}

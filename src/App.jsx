@@ -26,7 +26,7 @@ function App() {
         <QueryClientProvider client = {queryClient} >
             {isLoggedIn ?
                 <main className="bg-gradient-to-br from-[#061426] to-[#22262d] flex min-h-screen">
-                    <Sidebar/>
+                    <Sidebar setIsLoggedIn={setIsLoggedIn} />
                     <div className="flex-grow overflow-hidden">
                         <Routes>
                             <Route path="/all-passwords" element={<AllPasswords />} />
