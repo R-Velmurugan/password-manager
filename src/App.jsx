@@ -13,7 +13,7 @@ function App() {
     const [isLoggedIn , setIsLoggedIn] = useState(false);
     return (
         <QueryClientProvider client = {queryClient} >
-            {isLoggedIn ?
+            {/*{isLoggedIn ?*/}
                 <main className="bg-gradient-to-br from-[#061426] to-[#22262d] flex min-h-screen">
                     <Sidebar/>
                     <div className="flex-grow overflow-hidden">
@@ -24,11 +24,11 @@ function App() {
                             <Route path="/trash" element={<Trash/>}/>
                         </Routes>
                     </div>
-                </main> :
-                <main className="bg-gradient-to-r from-[#090D15] via-[#061426] to-[#090D15] flex min-h-screen">
-                    <Login setIsLoggedIn={setIsLoggedIn}/>
                 </main>
-            }
+                {/*<main className="bg-gradient-to-r from-[#090D15] via-[#061426] to-[#090D15] flex min-h-screen">*/}
+                {/*    <Login setIsLoggedIn={setIsLoggedIn}/>*/}
+                {/*</main>*/}
+            {/*}*/}
             {/*<ReactQueryDevtools initialIsOpen={true} />*/}
         </QueryClientProvider>
     );
