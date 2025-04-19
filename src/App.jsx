@@ -1,5 +1,5 @@
 import Sidebar from "./components/Sidebar/Sidebar";
-import {Navigate, Route, Routes , useNavigate} from "react-router-dom";
+import {Route, Routes , useNavigate} from "react-router-dom";
 import PasswordGenerator from "./components/PasswordGenerator/PasswordGenerator";
 import PasswordHealth from "./components/PasswordHealth";
 import AllPasswords from "./components/AllPasswords";
@@ -14,14 +14,14 @@ function App() {
     const [isLoggedIn , setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
-        isValidSessionPresent(setIsLoggedIn);
+        const checkSession = async () => {
+            const result = await isValidSessionPresent(setIsLoggedIn);
+            if (result === true) {
+                navigate("/", { replace: true });
+            }
+        };
+        checkSession();
     }, []);
-
-    useEffect(() => {
-        if (!isLoggedIn) {
-            navigate("/login");
-        }
-    }, [isLoggedIn, navigate]);
     return (
         <QueryClientProvider client = {queryClient} >
             {isLoggedIn ?
@@ -29,7 +29,7 @@ function App() {
                     <Sidebar setIsLoggedIn={setIsLoggedIn} />
                     <div className="flex-grow overflow-hidden">
                         <Routes>
-                            <Route path="/all-passwords" element={<AllPasswords />} />
+                            <Route path="/" element={<AllPasswords />} />
                             <Route path="/generate-password" element={<PasswordGenerator />} />
                             <Route path="/password-health" element={<PasswordHealth />} />
                             <Route path="/trash" element={<Trash />} />
@@ -37,8 +37,9 @@ function App() {
                     </div>
                 </main> :
                 <main className="bg-gradient-to-r from-[#090D15] via-[#061426] to-[#090D15] flex min-h-screen">
-                    <Navigate to={"/login"}/>
-                    <Login setIsLoggedIn={setIsLoggedIn}/>
+                    <Routes>
+                        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+                    </Routes>
                 </main>
             }
             {/*<ReactQueryDevtools initialIsOpen={true} />*/}

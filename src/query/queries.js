@@ -114,37 +114,40 @@ const login = async (username , password , setIsLoggedIn) => {
         const response = await axios.post(
             loginData.url,
             credentials,
-            loginData
+            loginData.config
         )
         if(200 === response.status){
             setIsLoggedIn(true);
+            return true;
         }
         else{
             setIsLoggedIn(false);
+            return false;
         }
     }catch (error) {
         setIsLoggedIn(false);
+        return false;
     }
 }
 
 const isValidSessionPresent = async (setIsLoggedIn) => {
     try{
         const response = await axios.post(
-            // 'http://localhost:8080/isLoggedIn',
             isLoggedIn.url,
-            null,
-            // {
-            //     withCredentials: true,
-            //     headers: {
-            //         "Content-Type": "application/x-www-form-urlencoded",
-            //     }
-            // }
+            {},
             isLoggedIn.config
         )
-        if(200 === response.status) setIsLoggedIn(true);
-        else setIsLoggedIn(false);
+        if(200 === response.status){
+            setIsLoggedIn(true);
+            return true;
+        }
+        else{
+            setIsLoggedIn(false);
+            return false;
+        }
     }catch (error) {
         setIsLoggedIn(false);
+        return false;
     }
 }
 

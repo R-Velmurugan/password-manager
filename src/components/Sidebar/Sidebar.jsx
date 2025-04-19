@@ -35,7 +35,7 @@ export default function Sidebar({setIsLoggedIn}) {
             <p className="mt-4 ml-4 text-stone-200">Categories</p>
             <List className=" pl-1 mt-4 ml-4 text-stone-200">
                 <CategoryOption optionName="All Items" optionIcon={APPS_ICON}/>
-                <Link to="/all-passwords"><CategoryOption optionName="Passwords" optionIcon={PASSWORD_LOCK}/></Link>
+                <Link to="/"><CategoryOption optionName="Passwords" optionIcon={PASSWORD_LOCK}/></Link>
                 <CategoryOption optionName="Secure Notes" optionIcon={DESCRIPTION_ICON}/>
                 <CategoryOption optionName="Personal Info" optionIcon={PERSONAL_INFO_ICON}/>
                 <Link to="/trash"><CategoryOption optionName="Trash" optionIcon={DELETE_ICON}/></Link>
