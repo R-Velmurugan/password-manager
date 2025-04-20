@@ -1,5 +1,5 @@
 import axios from "axios";
-import {deletePassword, getPassword, getPasswords, restorePassword, savePassword, updatePassword} from "./payload";
+import {deletePassword, getPassword, getPasswords, restorePassword, savePassword, updatePassword , loginData , isLoggedIn , logout} from "./payload";
 
 const fetchAllPasswords = async (isActive) => {
     const response = await axios.post(
@@ -106,4 +106,63 @@ const restorePasswordQuery = async (uuid) => {
     }
 }
 
-export {fetchAllPasswords , insertPassword , fetchPasswordByID , deletePasswordByUuid , updatePasswordQuery , restorePasswordQuery}
+const login = async (username , password , setIsLoggedIn) => {
+    const credentials = new URLSearchParams();
+    credentials.append("username" , username.current.value);
+    credentials.append("password" , password.current.value);
+    try {
+        const response = await axios.post(
+            loginData.url,
+            credentials,
+            loginData.config
+        )
+        if(200 === response.status){
+            setIsLoggedIn(true);
+            return true;
+        }
+        else{
+            setIsLoggedIn(false);
+            return false;
+        }
+    }catch (error) {
+        setIsLoggedIn(false);
+        return false;
+    }
+}
+
+const isValidSessionPresent = async (setIsLoggedIn) => {
+    try{
+        const response = await axios.post(
+            isLoggedIn.url,
+            {},
+            isLoggedIn.config
+        )
+        if(200 === response.status){
+            setIsLoggedIn(true);
+            return true;
+        }
+        else{
+            setIsLoggedIn(false);
+            return false;
+        }
+    }catch (error) {
+        setIsLoggedIn(false);
+        return false;
+    }
+}
+
+const removeSession = async (setIsLoggedIn) => {
+    try{
+        const response = await axios.post(
+            logout.url,
+            null,
+            logout.config
+        )
+        if(200 === response.status) setIsLoggedIn(false);
+        else setIsLoggedIn(true);
+    } catch (error){
+        setIsLoggedIn(true);
+    }
+}
+
+export {fetchAllPasswords , insertPassword , fetchPasswordByID , deletePasswordByUuid , updatePasswordQuery , restorePasswordQuery , login , isValidSessionPresent , removeSession}
