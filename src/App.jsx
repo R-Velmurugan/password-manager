@@ -7,7 +7,7 @@ import {QueryClient , QueryClientProvider} from "@tanstack/react-query";
 import Trash from "./components/Trash";
 import Login from "./components/Login";
 import {useEffect, useState} from "react";
-import {isValidSessionPresent} from "../src/query/queries";
+import {isValidSessionPresent} from "./query/queries";
 
 const queryClient = new QueryClient();
 function App() {
@@ -18,6 +18,9 @@ function App() {
             const result = await isValidSessionPresent(setIsLoggedIn);
             if (result === true) {
                 navigate("/", { replace: true });
+            }
+            else{
+                navigate("/login" , {replace : true})
             }
         };
         checkSession();
