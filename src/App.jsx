@@ -1,5 +1,5 @@
 import Sidebar from "./components/Sidebar/Sidebar";
-import {Route, Routes , useNavigate} from "react-router-dom";
+import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import PasswordGenerator from "./components/PasswordGenerator/PasswordGenerator";
 import PasswordHealth from "./components/PasswordHealth";
 import AllPasswords from "./components/AllPasswords";
@@ -8,44 +8,53 @@ import Trash from "./components/Trash";
 import Login from "./components/Login";
 import {useEffect, useState} from "react";
 import {isValidSessionPresent} from "./query/queries";
+import UserContext from "./store/store";
 
 const queryClient = new QueryClient();
-function App() {
+
+const App = () => {
+    const [username , setUsername] = useState("");
     const [isLoggedIn , setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
     useEffect(() => {
         const checkSession = async () => {
             const result = await isValidSessionPresent(setIsLoggedIn);
             if (result === true) {
-                navigate("/", { replace: true });
+                navigate("/all-passwords", { replace: true });
             }
             else{
                 navigate("/login" , {replace : true})
             }
         };
         checkSession();
-    }, []);
+    } , [location.pathname]);
+
     return (
         <QueryClientProvider client = {queryClient} >
-            {isLoggedIn ?
-                <main className="bg-gradient-to-br from-[#061426] to-[#22262d] flex min-h-screen">
-                    <Sidebar setIsLoggedIn={setIsLoggedIn} />
-                    <div className="flex-grow overflow-hidden">
+            <UserContext.Provider value={{username: username , setUsername: setUsername}}>
+                {username ?
+                    <main className="bg-gradient-to-br from-[#061426] to-[#22262d] flex min-h-screen">
+                        <Sidebar setIsLoggedIn={setIsLoggedIn}/>
+                        <div className="flex-grow overflow-hidden">
+                            <Routes>
+                                <Route path="/all-passwords" element={<AllPasswords/>}/>
+                                <Route path="/generate-password" element={<PasswordGenerator/>}/>
+                                <Route path="/password-health" element={<PasswordHealth/>}/>
+                                <Route path="/trash" element={<Trash/>}/>
+                            </Routes>
+                        </div>
+                    </main>
+                    :
+                    <main className="bg-gradient-to-r from-[#090D15] via-[#061426] to-[#090D15] flex min-h-screen">
                         <Routes>
-                            <Route path="/" element={<AllPasswords />} />
-                            <Route path="/generate-password" element={<PasswordGenerator />} />
-                            <Route path="/password-health" element={<PasswordHealth />} />
-                            <Route path="/trash" element={<Trash />} />
+                            <Route path="/login" element={<Login/>}/>
                         </Routes>
-                    </div>
-                </main> :
-                <main className="bg-gradient-to-r from-[#090D15] via-[#061426] to-[#090D15] flex min-h-screen">
-                    <Routes>
-                        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-                    </Routes>
-                </main>
-            }
-            {/*<ReactQueryDevtools initialIsOpen={true} />*/}
+                    </main>
+                }
+                {/*<ReactQueryDevtools initialIsOpen={true} />*/}
+            </UserContext.Provider>
+
         </QueryClientProvider>
     );
 }

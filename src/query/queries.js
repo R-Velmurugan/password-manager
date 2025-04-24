@@ -106,7 +106,7 @@ const restorePasswordQuery = async (uuid) => {
     }
 }
 
-const login = async (username , password , setIsLoggedIn) => {
+const login = async (username, password) => {
     const credentials = new URLSearchParams();
     credentials.append("username" , username.current.value);
     credentials.append("password" , password.current.value);
@@ -116,16 +116,8 @@ const login = async (username , password , setIsLoggedIn) => {
             credentials,
             loginData.config
         )
-        if(200 === response.status){
-            setIsLoggedIn(true);
-            return true;
-        }
-        else{
-            setIsLoggedIn(false);
-            return false;
-        }
+        return 200 === response.status;
     }catch (error) {
-        setIsLoggedIn(false);
         return false;
     }
 }
