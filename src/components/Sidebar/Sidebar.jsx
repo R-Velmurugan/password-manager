@@ -10,7 +10,7 @@ import {Link} from "react-router-dom";
 import {useContext} from "react";
 import UserContext from "../../store/store";
 
-export default function Sidebar({setIsLoggedIn}) {
+export default function Sidebar() {
 
     const UserCtx = useContext(UserContext);
 
@@ -35,7 +35,7 @@ export default function Sidebar({setIsLoggedIn}) {
 
     return (
         <aside className="w-64 md:w-72 bg-gradient-to-b from-[#3f444b] to-[#303238] my-2 rounded-md mx-1 font-medium">
-            <NavSidebar setIsLoggedIn={setIsLoggedIn} />
+            <NavSidebar/>
             <hr className="border-stone-600"/>
 
             <p className="mt-4 ml-4 text-stone-200">Categories</p>

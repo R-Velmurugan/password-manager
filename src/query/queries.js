@@ -122,7 +122,7 @@ const login = async (username, password) => {
     }
 }
 
-const isValidSessionPresent = async (setIsLoggedIn) => {
+const isValidSessionPresent = async (setUsername) => {
     try{
         const response = await axios.post(
             isLoggedIn.url,
@@ -130,15 +130,15 @@ const isValidSessionPresent = async (setIsLoggedIn) => {
             isLoggedIn.config
         )
         if(200 === response.status){
-            setIsLoggedIn(true);
+            setUsername(response.data);
             return true;
         }
         else{
-            setIsLoggedIn(false);
+            setUsername("");
             return false;
         }
     }catch (error) {
-        setIsLoggedIn(false);
+        setUsername("");
         return false;
     }
 }

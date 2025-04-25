@@ -1,5 +1,4 @@
-import {removeSession} from "../../query/queries"
-export default function NavSidebar({setIsLoggedIn}){
+export default function NavSidebar(){
     return (
         <div className="flex justify-between mx-4 py-2">
             <span>
@@ -18,7 +17,7 @@ export default function NavSidebar({setIsLoggedIn}){
                     </lord-icon>
                 </li>
                 <li>
-                    <button onClick={() => removeSession(setIsLoggedIn)} >
+                    <button>
                         <lord-icon
                             src="https://cdn.lordicon.com/oxgyjdir.json"
                             trigger="hover">

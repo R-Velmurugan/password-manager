@@ -14,14 +14,14 @@ const queryClient = new QueryClient();
 
 const App = () => {
     const [username , setUsername] = useState("");
-    const [isLoggedIn , setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     useEffect(() => {
         const checkSession = async () => {
-            const result = await isValidSessionPresent(setIsLoggedIn);
+            const result = await isValidSessionPresent(setUsername);
             if (result === true) {
-                navigate("/all-passwords", { replace: true });
+                if(location.pathname === "/login") navigate("/all-passwords", { replace: true });
+                else navigate(location.pathname , {replace : true});
             }
             else{
                 navigate("/login" , {replace : true})
@@ -35,7 +35,7 @@ const App = () => {
             <UserContext.Provider value={{username: username , setUsername: setUsername}}>
                 {username ?
                     <main className="bg-gradient-to-br from-[#061426] to-[#22262d] flex min-h-screen">
-                        <Sidebar setIsLoggedIn={setIsLoggedIn}/>
+                        <Sidebar/>
                         <div className="flex-grow overflow-hidden">
                             <Routes>
                                 <Route path="/all-passwords" element={<AllPasswords/>}/>
