@@ -14,9 +14,11 @@ export default function Login() {
     const {data , refetch} = useQuery({
         queryKey : ["login"],
         queryFn : async () => {
-            await login(userNameRef, passwordRef);
-            userCtx.setUsername(userNameRef.current.value);
-            navigate("/all-passwords");
+            let isSuccess = await login(userNameRef, passwordRef);
+            if(isSuccess){
+                userCtx.setUsername(userNameRef.current.value);
+                navigate("/all-passwords");
+            }
         },
         enabled: false
     })
