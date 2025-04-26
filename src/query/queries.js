@@ -106,7 +106,7 @@ const restorePasswordQuery = async (uuid) => {
     }
 }
 
-const login = async (username , password , setIsLoggedIn) => {
+const login = async (username, password) => {
     const credentials = new URLSearchParams();
     credentials.append("username" , username.current.value);
     credentials.append("password" , password.current.value);
@@ -116,21 +116,13 @@ const login = async (username , password , setIsLoggedIn) => {
             credentials,
             loginData.config
         )
-        if(200 === response.status){
-            setIsLoggedIn(true);
-            return true;
-        }
-        else{
-            setIsLoggedIn(false);
-            return false;
-        }
+        return 200 === response.status;
     }catch (error) {
-        setIsLoggedIn(false);
         return false;
     }
 }
 
-const isValidSessionPresent = async (setIsLoggedIn) => {
+const isValidSessionPresent = async (setUsername) => {
     try{
         const response = await axios.post(
             isLoggedIn.url,
@@ -138,15 +130,15 @@ const isValidSessionPresent = async (setIsLoggedIn) => {
             isLoggedIn.config
         )
         if(200 === response.status){
-            setIsLoggedIn(true);
+            setUsername(response.data);
             return true;
         }
         else{
-            setIsLoggedIn(false);
+            setUsername("");
             return false;
         }
     }catch (error) {
-        setIsLoggedIn(false);
+        setUsername("");
         return false;
     }
 }
