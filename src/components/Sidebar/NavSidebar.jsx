@@ -1,4 +1,13 @@
+import {Badge, styled} from "@mui/material";
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+        top: 20,
+        padding: '0 4px',
+    },
+}));
 export default function NavSidebar(){
+
     return (
         <div className="flex justify-between mx-4 py-2">
             <span>
@@ -9,12 +18,17 @@ export default function NavSidebar(){
                 </lord-icon>
             </span>
             <ul className="flex justify-evenly">
-                <li>
-                    <lord-icon
-                        src="https://cdn.lordicon.com/jxzkkoed.json"
-                        trigger="hover"
-                        state="hover-enlarge">
-                    </lord-icon>
+                <li className="px-2" >
+                    <StyledBadge badgeContent={0} color="warning" max={10}>
+                        <lord-icon
+                            src="https://cdn.lordicon.com/pilfbsjh.json"
+                            trigger="loop"
+                            delay="2500"
+                            state="in-reveal"
+                            style={{width : 45 , height : 35}}>
+                        </lord-icon>
+                    </StyledBadge>
+
                 </li>
                 <li>
                     <button>

@@ -30,6 +30,21 @@ const getPasswordByUUIDQuery =
   }
 }`
 
+const getExpiredPasswordsQuery =
+    `query Notifications($type : [String] , $username : String){
+      notifications(type :$type , username : $username){
+        description
+      }
+    }`
+
+const getMultiplePasswordsByUUIDQuery =
+    `query MultiplePasswords($uuids : [String]){
+      multiplePasswords(uuids : $uuids){
+        url
+        domain
+      }
+    }`
+
 const insertPasswordQuery = `mutation InsertPassword($domain : String! , $url : String! , $username : String! , $password : String! , $email : String! , $notes : String){
                     insertPassword(passwordInput : {
                         url :$url
@@ -71,6 +86,18 @@ const getPasswords = {
 const getPassword = {
   "url" : GRAPHQL_URL,
   "query" : getPasswordByUUIDQuery,
+  "config" : CONFIG
+}
+
+const getExpiredPasswords = {
+  "url" : GRAPHQL_URL,
+  "query" : getExpiredPasswordsQuery,
+  "config" : CONFIG
+}
+
+const getMultiplePasswordsByUUID = {
+  "url" : GRAPHQL_URL,
+  "query" : getMultiplePasswordsByUUIDQuery,
   "config" : CONFIG
 }
 
@@ -128,4 +155,4 @@ const logout = {
   }
 }
 
-export {getPasswords , savePassword , getPassword , deletePassword , updatePassword , restorePassword , loginData , isLoggedIn , logout};
+export {getPasswords , savePassword , getPassword , getExpiredPasswords , getMultiplePasswordsByUUID , deletePassword , updatePassword , restorePassword , loginData , isLoggedIn , logout};

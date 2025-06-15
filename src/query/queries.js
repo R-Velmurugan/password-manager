@@ -1,5 +1,16 @@
 import axios from "axios";
-import {deletePassword, getPassword, getPasswords, restorePassword, savePassword, updatePassword , loginData , isLoggedIn , logout} from "./payload";
+import {
+    deletePassword,
+    getPassword,
+    getPasswords,
+    restorePassword,
+    savePassword,
+    updatePassword,
+    loginData,
+    isLoggedIn,
+    logout,
+    getExpiredPasswords, getMultiplePasswordsByUUID
+} from "./payload";
 
 const fetchAllPasswords = async (isActive) => {
     const response = await axios.post(
@@ -54,6 +65,36 @@ const fetchPasswordByID = async (uuid) => {
     )
     return response.data.data.password;
 }
+
+const fetchExpiredPasswordsForNotification = async (type , username) => {
+    const response = await axios.post(
+        getExpiredPasswords.url,
+        {
+            query : getExpiredPasswords.query,
+            variables : {
+                "type" : type,
+                "username" : username
+            }
+        },
+        getExpiredPasswords.config
+    )
+    return response.data.data.notifications;
+}
+
+const fetchMultiplePasswordsByUUID = async (uuids) => {
+    const response = await axios.post(
+        getMultiplePasswordsByUUID.url,
+        {
+            query : getMultiplePasswordsByUUID.query,
+            variables : {
+                uuids
+            }
+        },
+        getMultiplePasswordsByUUID.config
+    )
+    return response.data.data.multiplePasswords;
+}
+
 const deletePasswordByUuid = async (deleteUuid) => {
     try {
         await axios.post(
@@ -157,4 +198,4 @@ const removeSession = async (setIsLoggedIn) => {
     }
 }
 
-export {fetchAllPasswords , insertPassword , fetchPasswordByID , deletePasswordByUuid , updatePasswordQuery , restorePasswordQuery , login , isValidSessionPresent , removeSession}
+export {fetchAllPasswords , insertPassword , fetchPasswordByID , fetchMultiplePasswordsByUUID , fetchExpiredPasswordsForNotification , deletePasswordByUuid , updatePasswordQuery , restorePasswordQuery , login , isValidSessionPresent , removeSession}

@@ -1,9 +1,36 @@
 import GppMaybeIcon from "@mui/icons-material/GppMaybe";
 import SectionHeader from "./UI/SectionHeader";
+import {useQuery} from "@tanstack/react-query";
+import {fetchExpiredPasswordsForNotification, fetchMultiplePasswordsByUUID} from "../query/queries";
+import FaviconFetcher from "./UI/FaviconFetcher";
+import {useContext, useState} from "react";
+import UserContext from "../store/store";
 
 export default function PasswordHealth() {
+    const [showExpiredPasswords , setShowExpiredPasswords] = useState(false);
+    const UserCtx = useContext(UserContext);
+    const {data: expiredPasswordsData , isLoading: expiredPasswordsDataIsLoading , isError: expiredPasswordsIsError} = useQuery({
+        queryKey : ["expiredPasswords"],
+        queryFn : () => {
+            return fetchExpiredPasswordsForNotification("password_expired" , UserCtx.username);
+        }
+    })
 
-    let weakPasswords = 0;
+    const {data : passwordData , isLoading: passwordDataIsLoading , isError : passwordDataIsError} = useQuery({
+        queryKey : ["expiredPasswordsData"],
+        queryFn : () => getPasswordsData()
+    })
+
+    const getPasswordsData = () => {
+        return fetchMultiplePasswordsByUUID(expiredPasswordsData[0].description);
+    }
+
+    const handleShowExpiredPasswords = () => {
+        setShowExpiredPasswords((previousState) => !previousState);
+    }
+
+    if (expiredPasswordsDataIsLoading || passwordDataIsLoading) return <p>Loading...</p>;
+    if (expiredPasswordsIsError || passwordDataIsError) return <p>Error fetching data</p>;
 
     return (<section className="w-full text-stone-200 text-xl py-2">
         <SectionHeader header = "Password Health" />
@@ -15,14 +42,29 @@ export default function PasswordHealth() {
                         </div>
 
                         <div>
-                            <p className="text-pink-800">Weak Passwords</p>
-                            <p className="text-sm"> Makes your account easy-to-hack </p>
+                            <p className="text-pink-800">Expired Passwords</p>
+                            <p className="text-sm"> Passwords that are not updated for 3+ months </p>
                         </div>
                     </span>
-                <a href="/" className="inline-block px-3 my-3" >
-                    <span className="text-[2rem] " >{weakPasswords}</span>
+                <button className="inline-block px-3 my-3" onClick={handleShowExpiredPasswords}>
+                    <span className="text-[2rem] " >{expiredPasswordsData[0].description.length}</span>
                     <span> accounts</span>
-                </a>
+                </button>
+                {showExpiredPasswords &&
+                    <section>
+                        <hr className="w-80 border-stone-400 mx-auto py-2"/>
+                        <ul>
+                            {
+                                passwordData.map(password =>
+                                    <li className="text-base flex items-center gap-2"><FaviconFetcher url={password.url}
+                                                                                                      domainName={password.domain}/>
+                                        {password.domain}
+                                    </li>
+                                )
+                            }
+                        </ul>
+                    </section>
+                }
             </li>
 
         </ul>
