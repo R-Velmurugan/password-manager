@@ -22,7 +22,7 @@ export default function PasswordHealth() {
     })
 
     const getPasswordsData = () => {
-        return fetchMultiplePasswordsByUUID(expiredPasswordsData[0].description);
+        return fetchMultiplePasswordsByUUID(expiredPasswordsData[0].description , UserCtx.username);
     }
 
     const handleShowExpiredPasswords = () => {

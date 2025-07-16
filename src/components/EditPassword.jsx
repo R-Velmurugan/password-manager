@@ -1,9 +1,10 @@
 import Modal from "./UI/Modal";
 import Input from "./UI/Input";
-import {useEffect, useRef, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import {Button, Divider} from "@mui/material";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {fetchPasswordByID, updatePasswordQuery} from "../query/queries";
+import UserContext from "../store/store";
 
 export default function EditPassword({uuid , setEditPasswordUuid , refresh}){
     const [error , setError] = useState({
@@ -15,10 +16,11 @@ export default function EditPassword({uuid , setEditPasswordUuid , refresh}){
     const currentPasswordRef = useRef();
     const newPasswordRef = useRef();
     const newPasswordRetypeRef = useRef();
+    const UserCtx = useContext(UserContext);
 
     const {data} = useQuery({
         queryKey : ["currentPassword"],
-        queryFn : () => fetchPasswordByID(uuid)
+        queryFn : () => fetchPasswordByID(uuid , UserCtx.username)
     })
     const updatePassword = useMutation({
         mutationFn : () => updatePasswordQuery(uuid , newPasswordRetypeRef.current.value),
