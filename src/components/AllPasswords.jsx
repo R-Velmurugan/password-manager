@@ -3,20 +3,23 @@ import SectionHeader from "./UI/SectionHeader";
 import moment from "moment";
 import {useQuery} from "@tanstack/react-query";
 import AddPassword from "./AddPassword";
-import {useRef, useState} from "react";
+import {useContext, useRef, useState} from "react";
 import Password from "./Password";
 import Warning from "./Warning";
 import {fetchAllPasswords} from "../query/queries";
 import EditPassword from "./EditPassword";
+import UserContext from "../store/store";
 
 export default function AllPasswords(){
     const [uuid , setUuid] = useState("");
     const [deletePasswordUuid , setDeletePasswordUuid] = useState("");
     const [editPasswordUuid , setEditPasswordUuid] = useState("");
+    const UserCtx = useContext(UserContext);
 
+    console.log(UserCtx.username)
     const {data , isLoading , isError,refetch} = useQuery({
         queryKey : ["passwords"],
-        queryFn : () => fetchAllPasswords(true)
+        queryFn : () => fetchAllPasswords(true , UserCtx.username)
     })
 
     const addPasswordRef = useRef();

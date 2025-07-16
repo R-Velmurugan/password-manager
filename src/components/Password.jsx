@@ -3,15 +3,16 @@ import {Avatar, Card, CardContent, CardHeader, Divider, IconButton} from "@mui/m
 import CloseIcon from '@mui/icons-material/Close';
 import {useQuery} from "@tanstack/react-query";
 import FaviconFetcher from "./UI/FaviconFetcher";
-import {useEffect, useRef} from "react";
+import {useContext, useEffect, useRef} from "react";
 import {fetchPasswordByID} from "../query/queries";
+import UserContext from "../store/store";
 export default function Password({uuid , setUuid}){
     const showPasswordRef = useRef();
-
+    const UserCtx = useContext(UserContext);
 
     const {data , isLoading , isError} = useQuery({
         queryKey : ["password" , uuid],
-        queryFn : () => fetchPasswordByID(uuid),
+        queryFn : () => fetchPasswordByID(uuid , UserCtx.username),
         enabled : !!uuid
     })
 

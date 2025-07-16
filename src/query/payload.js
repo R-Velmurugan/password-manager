@@ -9,8 +9,8 @@ const CONFIG = {
   withCredentials : true
 };
 const getPasswordsQuery =
-    `query AllPasswords($isActive : Boolean){
-        passwords(isActive : $isActive){
+    `query AllPasswords($isActive : Boolean , $username : String){
+        passwords(isActive : $isActive , username : $username){
             uuid
             domain
             url
@@ -20,8 +20,8 @@ const getPasswordsQuery =
     }`
 
 const getPasswordByUUIDQuery =
-    `query GetPassword($uuid : String) {
-  password(uuid : $uuid){
+    `query GetPassword($uuid : String , $username : String) {
+  password(uuid : $uuid , username : $username){
     domain
     url
     username
@@ -38,8 +38,8 @@ const getExpiredPasswordsQuery =
     }`
 
 const getMultiplePasswordsByUUIDQuery =
-    `query MultiplePasswords($uuids : [String]){
-      multiplePasswords(uuids : $uuids){
+    `query MultiplePasswords($uuids : [String] , $username : String){
+      multiplePasswords(uuids : $uuids , username : $username){
         url
         domain
       }

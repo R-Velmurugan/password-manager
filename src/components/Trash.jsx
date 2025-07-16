@@ -3,9 +3,10 @@ import FaviconFetcher from "./UI/FaviconFetcher";
 import moment from "moment/moment";
 import {useQuery} from "@tanstack/react-query";
 import {fetchAllPasswords} from "../query/queries";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import Password from "./Password";
 import RevertPassword from "./RevertPassword";
+import UserContext from "../store/store";
 
 export default function Trash(){
     const [uuid , setUuid] = useState("");
@@ -13,12 +14,12 @@ export default function Trash(){
         uuid : "",
         domainName : ""
     });
+    const UserCtx = useContext(UserContext);
     const {data , isLoading , isError , refetch} = useQuery({
         queryKey : ["passwords"],
-        queryFn : () => fetchAllPasswords(false),
+        queryFn : () => fetchAllPasswords(false , UserCtx.username),
     })
 
-    console.log(data);
 
     if(isLoading) return <b>Eh! wait for sometime</b>
     if(isError) {
