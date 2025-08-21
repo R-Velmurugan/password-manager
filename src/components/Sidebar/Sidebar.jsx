@@ -12,8 +12,6 @@ import UserContext from "../../store/store";
 
 export default function Sidebar() {
 
-    const UserCtx = useContext(UserContext);
-
     const APPS_ICON = <AppsIcon className="text-stone-200"/>
     const PASSWORD_LOCK = <HttpsIcon className="text-stone-200"/>
     const DESCRIPTION_ICON = <DescriptionIcon className="text-stone-200"/>
@@ -30,8 +28,6 @@ export default function Sidebar() {
             src="https://cdn.lordicon.com/brweqbnv.json"
             trigger="hover">
         </lord-icon>
-
-    console.log(UserCtx)
 
     return (
         <aside className="w-64 md:w-72 bg-gradient-to-b from-[#3f444b] to-[#303238] my-2 rounded-md mx-1 font-medium">

@@ -12,14 +12,15 @@ import {
     getExpiredPasswords, getMultiplePasswordsByUUID
 } from "./payload";
 
-const fetchAllPasswords = async (isActive , username) => {
+const fetchAllPasswords = async (isActive, username, password) => {
     const response = await axios.post(
         getPasswords.url,
         {
             query : getPasswords.query,
             variables : {
-                "isActive" : isActive,
-                "username" : username
+                isActive,
+                username,
+                password
             }
         },
         getPasswords.config
@@ -52,15 +53,16 @@ const insertPassword = async (domainNameRef , urlRef , usernameRef , emailRef , 
     }
 }
 
-const fetchPasswordByID = async (uuid , username) => {
+const fetchPasswordByID = async (uuid , username , password) => {
     const response = await axios.post(
         getPassword.url,
         {
             query : getPassword.query,
             variables :
                 {
-                    "uuid" : uuid,
-                    "username" : username
+                    uuid,
+                    username,
+                    password
                 }
         },
         getPassword.config

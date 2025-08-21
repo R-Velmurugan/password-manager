@@ -9,19 +9,20 @@ const CONFIG = {
   withCredentials : true
 };
 const getPasswordsQuery =
-    `query AllPasswords($isActive : Boolean , $username : String){
-        passwords(isActive : $isActive , username : $username){
+    `query AllPasswords($isActive : Boolean , $username : String , $password : String){
+        passwords(isActive : $isActive , username : $username , masterPassword : $password){
             uuid
             domain
             url
             email
-            updationDate
+            updationDate,
+            password
         }
     }`
 
 const getPasswordByUUIDQuery =
-    `query GetPassword($uuid : String , $username : String) {
-  password(uuid : $uuid , username : $username){
+    `query GetPassword($uuid : String , $username : String , $password : String) {
+  password(uuid : $uuid , username : $username , masterPassword : $password){
     domain
     url
     username

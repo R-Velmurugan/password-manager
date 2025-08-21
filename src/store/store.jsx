@@ -2,7 +2,9 @@ import {createContext} from "react";
 
 const UserContext = createContext({
     username : "",
-    setUsername : (username) => {}
+    password : "",
+    setUsername : (username) => {},
+    setPassword : (password) => {}
 });
 
 
