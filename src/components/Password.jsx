@@ -12,7 +12,7 @@ export default function Password({uuid , setUuid}){
 
     const {data , isLoading , isError} = useQuery({
         queryKey : ["password" , uuid],
-        queryFn : () => fetchPasswordByID(uuid , UserCtx.username),
+        queryFn : () => fetchPasswordByID(uuid , UserCtx.username , UserCtx.password),
         enabled : !!uuid
     })
 

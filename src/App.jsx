@@ -14,6 +14,7 @@ const queryClient = new QueryClient();
 
 const App = () => {
     const [username , setUsername] = useState("");
+    const [password , setPassword] = useState("");
     const navigate = useNavigate();
     const location = useLocation();
     useEffect(() => {
@@ -32,7 +33,7 @@ const App = () => {
 
     return (
         <QueryClientProvider client = {queryClient} >
-            <UserContext.Provider value={{username: username , setUsername: setUsername}}>
+            <UserContext.Provider value={{username , setUsername , password , setPassword}}>
                 {username ?
                     <main className="bg-gradient-to-br from-[#061426] to-[#22262d] flex min-h-screen">
                         <Sidebar/>

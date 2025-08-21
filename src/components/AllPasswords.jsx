@@ -16,10 +16,9 @@ export default function AllPasswords(){
     const [editPasswordUuid , setEditPasswordUuid] = useState("");
     const UserCtx = useContext(UserContext);
 
-    console.log(UserCtx.username)
     const {data , isLoading , isError,refetch} = useQuery({
         queryKey : ["passwords"],
-        queryFn : () => fetchAllPasswords(true , UserCtx.username)
+        queryFn : () => fetchAllPasswords(true, UserCtx.username, UserCtx.password)
     })
 
     const addPasswordRef = useRef();

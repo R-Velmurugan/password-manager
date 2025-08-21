@@ -17,7 +17,7 @@ export default function Trash(){
     const UserCtx = useContext(UserContext);
     const {data , isLoading , isError , refetch} = useQuery({
         queryKey : ["passwords"],
-        queryFn : () => fetchAllPasswords(false , UserCtx.username),
+        queryFn : () => fetchAllPasswords(false, UserCtx.username, UserCtx.password),
     })
 
 
