@@ -46,7 +46,7 @@ const getMultiplePasswordsByUUIDQuery =
       }
     }`
 
-const insertPasswordQuery = `mutation InsertPassword($domain : String! , $url : String! , $username : String! , $password : String! , $email : String! , $notes : String){
+const insertPasswordQuery = `mutation InsertPassword($domain : String! , $url : String! , $username : String! , $password : String! , $email : String! , $notes : String , $masterPassword : String! , $uname : String!){
                     insertPassword(passwordInput : {
                         url :$url
                         domain :$domain
@@ -54,6 +54,8 @@ const insertPasswordQuery = `mutation InsertPassword($domain : String! , $url : 
                         password : $password
                         email :$email
                         notes :$notes
+                        uname : $uname
+                        masterPassword : $masterPassword
                     }){
                         uuid
                         domain
