@@ -1,9 +1,10 @@
 import Modal from "./UI/Modal";
 import Input from "./UI/Input";
 import {Button} from "@mui/material";
-import {useRef} from "react";
+import {useContext, useRef} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {insertPassword} from "../query/queries";
+import UserContext from "../store/store";
 
 export default function AddPassword({addEditPasswordRef , refresh}){
     const formRef = useRef();
@@ -13,7 +14,7 @@ export default function AddPassword({addEditPasswordRef , refresh}){
     const passwordRef = useRef();
     const emailRef = useRef();
     const notesRef = useRef();
-
+    const UserCtx = useContext(UserContext);
 
 
     const mutation = useMutation({
@@ -23,7 +24,9 @@ export default function AddPassword({addEditPasswordRef , refresh}){
             usernameRef,
             emailRef,
             passwordRef,
-            notesRef
+            notesRef,
+            UserCtx.username,
+            UserCtx.password
         ),
         onSuccess : () => {
             addEditPasswordRef.current.close()

@@ -28,7 +28,7 @@ const fetchAllPasswords = async (isActive, username, password) => {
     return response.data.data.passwords;
 }
 
-const insertPassword = async (domainNameRef , urlRef , usernameRef , emailRef , passwordRef , notesRef) => {
+const insertPassword = async (domainNameRef , urlRef , usernameRef , emailRef , passwordRef , notesRef , masterPassword , uname) => {
     try {
         await axios.post(
             savePassword.url,
@@ -41,9 +41,10 @@ const insertPassword = async (domainNameRef , urlRef , usernameRef , emailRef , 
                         "username": usernameRef.current.value,
                         "email": emailRef.current.value,
                         "password": passwordRef.current.value,
-                        "notes": notesRef.current.value
+                        "notes": notesRef.current.value,
+                        uname,
+                        masterPassword
                     }
-
             },
             savePassword.config
         );
