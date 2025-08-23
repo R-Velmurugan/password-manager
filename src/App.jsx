@@ -5,7 +5,7 @@ import PasswordHealth from "./components/PasswordHealth";
 import AllPasswords from "./components/AllPasswords";
 import {QueryClient , QueryClientProvider} from "@tanstack/react-query";
 import Trash from "./components/Trash";
-import Login from "./components/Login";
+import Authentication from "./components/Authentication";
 import {useEffect, useState} from "react";
 import {isValidSessionPresent} from "./query/queries";
 import UserContext from "./store/store";
@@ -49,7 +49,7 @@ const App = () => {
                     :
                     <main className="bg-gradient-to-r from-[#090D15] via-[#061426] to-[#090D15] flex min-h-screen">
                         <Routes>
-                            <Route path="/login" element={<Login/>}/>
+                            <Route path="/login" element={<Authentication/>}/>
                         </Routes>
                     </main>
                 }
