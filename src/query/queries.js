@@ -9,7 +9,7 @@ import {
     loginData,
     isLoggedIn,
     logout,
-    getExpiredPasswords, getMultiplePasswordsByUUID
+    getExpiredPasswords, getMultiplePasswordsByUUID, registerData
 } from "./payload";
 
 const fetchAllPasswords = async (isActive, username, password) => {
@@ -169,6 +169,22 @@ const login = async (username, password) => {
     }
 }
 
+const register = async (username , password , email) => {
+    try{
+        const response = await axios.post(
+            registerData.url,
+            {
+                username : username.current.value,
+                password : password.current.value,
+                email : email.current.value
+            }
+        )
+        return 201 === response.status;
+    } catch (error){
+        return false;
+    }
+}
+
 const isValidSessionPresent = async (setUsername) => {
     try{
         const response = await axios.post(
@@ -204,4 +220,17 @@ const removeSession = async (setIsLoggedIn) => {
     }
 }
 
-export {fetchAllPasswords , insertPassword , fetchPasswordByID , fetchMultiplePasswordsByUUID , fetchExpiredPasswordsForNotification , deletePasswordByUuid , updatePasswordQuery , restorePasswordQuery , login , isValidSessionPresent , removeSession}
+export {
+    fetchAllPasswords,
+    insertPassword,
+    fetchPasswordByID,
+    fetchMultiplePasswordsByUUID,
+    fetchExpiredPasswordsForNotification,
+    deletePasswordByUuid,
+    updatePasswordQuery,
+    restorePasswordQuery,
+    login,
+    register,
+    isValidSessionPresent,
+    removeSession
+}

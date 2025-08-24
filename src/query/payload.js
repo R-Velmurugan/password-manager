@@ -1,5 +1,6 @@
 const GRAPHQL_URL = "http://localhost:8080/graphql";
 const LOGIN_URL = "http://localhost:8080/login";
+const REGISTER = "http://localhost:8080/register";
 const IS_LOGGED_IN = "http://localhost:8080/isLoggedIn";
 const LOGOUT = "http://localhost:8080/logout";
 const CONFIG = {
@@ -138,6 +139,16 @@ const loginData = {
   }
 }
 
+const registerData = {
+  "url" : REGISTER,
+  "config" : {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    withCredentials : true
+  }
+}
+
 const isLoggedIn = {
   "url" : IS_LOGGED_IN,
   "config" : {
@@ -158,4 +169,17 @@ const logout = {
   }
 }
 
-export {getPasswords , savePassword , getPassword , getExpiredPasswords , getMultiplePasswordsByUUID , deletePassword , updatePassword , restorePassword , loginData , isLoggedIn , logout};
+export {
+  getPasswords,
+  savePassword,
+  getPassword,
+  getExpiredPasswords,
+  getMultiplePasswordsByUUID,
+  deletePassword,
+  updatePassword,
+  restorePassword,
+  loginData,
+  isLoggedIn,
+  logout,
+  registerData
+};

@@ -1,7 +1,7 @@
 import Input from "./UI/Input";
 import {useContext, useRef, useState} from "react";
 import {useQuery} from "@tanstack/react-query";
-import {login} from "../query/queries";
+import {login , register} from "../query/queries";
 import {Box, Button, Tooltip} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import UserContext from "../store/store";
@@ -9,6 +9,10 @@ import UserContext from "../store/store";
 export default function Authentication() {
     const userNameRef = useRef();
     const passwordRef = useRef();
+    const registrationUsernameRef = useRef();
+    const registrationPasswordRef = useRef();
+    const registrationRetypePasswordRef = useRef();
+    const registrationEmailRef = useRef();
     const navigate = useNavigate();
     const UserCtx = useContext(UserContext);
     const [isLoginView , setIsLoginView] = useState(true);
@@ -25,6 +29,16 @@ export default function Authentication() {
         enabled: false
     })
 
+    const {refetch : signUp} = useQuery({
+        queryKey : ["register"],
+        queryFn : async () => {
+            let isSuccess = await register(registrationUsernameRef, registrationPasswordRef , registrationEmailRef);
+            if(isSuccess) setIsLoginView(true);
+            else setIsLoginView(false);
+        },
+        enabled : false
+    })
+
     return (
         <section className="relative m-auto border border-solid border-slate-800 rounded-md bg-gradient-to-b from-[#050E18] via-[#04111F] to-[#050E18]">
             <h1 className="text-stone-200 p-2 font-bold flex items-center text-xl text-center">
@@ -38,8 +52,12 @@ export default function Authentication() {
                 Caput Draconis
             </h1>
             {isLoginView ?
-                <Login userNameRef={userNameRef} passwordRef={passwordRef} login={() => signIn()} shouldRegister={() => setIsLoginView(false)} /> :
-                <Register usernameRef={userNameRef} passwordRef={passwordRef} shouldLogin={() => setIsLoginView(true)} />
+                <Login userNameRef={userNameRef} passwordRef={passwordRef} login={() => signIn()}
+                       shouldRegister={() => setIsLoginView(false)}/> :
+                <Register usernameRef={registrationUsernameRef} passwordRef={registrationPasswordRef}
+                          reEnteredPassword={registrationRetypePasswordRef} emailRef={registrationEmailRef}
+                          register={() => signUp()}
+                          shouldLogin={() => setIsLoginView(true)}/>
             }
         </section>
     )
