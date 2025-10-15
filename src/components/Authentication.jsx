@@ -20,11 +20,11 @@ export default function Authentication() {
     const [isUsernamePresent, setIsUsernamePresent] = useState(false);
     const loginMutation = useMutation({
         mutationFn : async () => {
-            return await login(userNameRef, passwordRef);
+            return await login(userNameRef.current.value, passwordRef.current.value);
         },
         onSuccess: () => {
             UserCtx.setUsername(userNameRef.current.value);
-            UserCtx.setPassword(userNameRef.current.value);
+            UserCtx.setPassword(passwordRef.current.value);
             navigate('/all-passwords');
         },
         onError: error => {
@@ -35,7 +35,7 @@ export default function Authentication() {
 
     const registrationMutation = useMutation({
         mutationFn : async () => {
-            return await register(registrationUsernameRef, registrationPasswordRef , registrationEmailRef);
+            return await register(registrationUsernameRef.current.value, registrationPasswordRef.current.value , registrationEmailRef.current.value);
         },
         onSuccess: () => {
             setIsUsernamePresent(false);
@@ -63,7 +63,7 @@ export default function Authentication() {
                 <Login userNameRef={userNameRef} passwordRef={passwordRef} login={() => loginMutation.mutate()}
                        shouldRegister={() => setIsLoginView(false)}/> :
                 <Register usernameRef={registrationUsernameRef} passwordRef={registrationPasswordRef}
-                          reEnteredPassword={registrationRetypePasswordRef} emailRef={registrationEmailRef}
+                          reTypedPassword={registrationRetypePasswordRef} emailRef={registrationEmailRef}
                           register={() => registrationMutation.mutate()}
                           shouldLogin={() => setIsLoginView(true)}
                           isUsernamePresent={isUsernamePresent}
@@ -96,7 +96,7 @@ const Login = ({userNameRef , passwordRef , login , shouldRegister}) => {
     )
 }
 
-const Register = ({usernameRef , passwordRef , reEnteredPassword , emailRef , register , shouldLogin, isUsernamePresent, setIsUsernamePresent}) => {
+const Register = ({usernameRef , passwordRef , reTypedPassword , emailRef , register , shouldLogin, isUsernamePresent, setIsUsernamePresent}) => {
     const [errors, setErrors] = useState({
         'password': false,
         'rePassword': false,
@@ -105,7 +105,7 @@ const Register = ({usernameRef , passwordRef , reEnteredPassword , emailRef , re
     const [isDisabled, setIsDisabled] = useState(true);
     useEffect(() =>{
         console.log(isDisabled)
-        setIsDisabled(isUsernamePresent && !(errors.email && errors.password && errors.rePassword))
+        setIsDisabled(isUsernamePresent || errors.password || errors.rePassword || errors.email)
     }, [errors, isUsernamePresent])
     const tooltips = {
         username : "This username cannot be changed after registering. So pick a good one ;)",
@@ -121,7 +121,7 @@ const Register = ({usernameRef , passwordRef , reEnteredPassword , emailRef , re
         setErrors({
             ...errors,
             password: !isValidPassword(event.target.value),
-            rePassword: !isRePasswordMatchingPassword(event.target.value, reEnteredPassword.current.value)})
+            rePassword: !isRePasswordMatchingPassword(event.target.value, reTypedPassword.current.value)})
     }
     const handleRePasswordChange = (event) => {
         setErrors({...errors, rePassword: !isRePasswordMatchingPassword(event.target.value, passwordRef.current.value)})
@@ -151,7 +151,7 @@ const Register = ({usernameRef , passwordRef , reEnteredPassword , emailRef , re
             </Tooltip>
             {errors.password && <p className="text-red-600">Password did not match the requirements</p>}
             <Tooltip title={tooltips.reEnteredPassword} placement="right">
-                <Input ref={reEnteredPassword} className="text-stone-200"
+                <Input ref={reTypedPassword} className="text-stone-200"
                        extraStyles="!bg-black border border-solid border-slate-800 text-stone-200 placeholder-gray-500"
                        label="Password"
                        placeholder="Reenter the password."
@@ -179,5 +179,5 @@ const Register = ({usernameRef , passwordRef , reEnteredPassword , emailRef , re
     )
 }
 const isValidEmail = email => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
-const isValidPassword = password => /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,}/.test(password);
+const isValidPassword = password => /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{10,}/.test(password);
 const isRePasswordMatchingPassword = (password1, password2) => password1 === password2;
