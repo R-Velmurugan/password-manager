@@ -28,7 +28,7 @@ const fetchAllPasswords = async (isActive, username, password) => {
     return response.data.data.passwords;
 }
 
-const insertPassword = async (domainNameRef , urlRef , usernameRef , emailRef , passwordRef , notesRef , masterPassword , uname) => {
+const insertPassword = async (domainNameRef , urlRef , usernameRef , emailRef , passwordRef , notesRef , uname , masterPassword) => {
     try {
         await axios.post(
             savePassword.url,
@@ -77,8 +77,8 @@ const fetchExpiredPasswordsForNotification = async (type , username) => {
         {
             query : getExpiredPasswords.query,
             variables : {
-                "type" : type,
-                "username" : username
+                type,
+                username
             }
         },
         getExpiredPasswords.config
@@ -86,14 +86,15 @@ const fetchExpiredPasswordsForNotification = async (type , username) => {
     return response.data.data.notifications;
 }
 
-const fetchMultiplePasswordsByUUID = async (uuids , username) => {
+const fetchMultiplePasswordsByUUID = async (uuids , username ,masterPassword) => {
     const response = await axios.post(
         getMultiplePasswordsByUUID.url,
         {
             query : getMultiplePasswordsByUUID.query,
             variables : {
                 uuids,
-                username
+                username,
+                masterPassword
             }
         },
         getMultiplePasswordsByUUID.config
@@ -157,32 +158,22 @@ const login = async (username, password) => {
     const credentials = new URLSearchParams();
     credentials.append("username" , username.current.value);
     credentials.append("password" , password.current.value);
-    try {
-        const response = await axios.post(
-            loginData.url,
-            credentials,
-            loginData.config
-        )
-        return 200 === response.status;
-    }catch (error) {
-        return false;
-    }
+    return await axios.post(
+        loginData.url,
+        credentials,
+        loginData.config
+    )
 }
 
 const register = async (username , password , email) => {
-    try{
-        const response = await axios.post(
-            registerData.url,
-            {
-                username : username.current.value,
-                password : password.current.value,
-                email : email.current.value
-            }
-        )
-        return 201 === response.status;
-    } catch (error){
-        return false;
-    }
+    return await axios.post(
+        registerData.url,
+        {
+            username : username.current.value,
+            password : password.current.value,
+            email : email.current.value
+        }
+    )
 }
 
 const isValidSessionPresent = async (setUsername) => {

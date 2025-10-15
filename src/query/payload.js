@@ -40,8 +40,8 @@ const getExpiredPasswordsQuery =
     }`
 
 const getMultiplePasswordsByUUIDQuery =
-    `query MultiplePasswords($uuids : [String] , $username : String){
-      multiplePasswords(uuids : $uuids , username : $username){
+    `query MultiplePasswords($uuids : [String] , $username : String, $masterPassword: String){
+      multiplePasswords(uuids : $uuids , username : $username, masterPassword: $masterPassword){
         url
         domain
       }
