@@ -155,7 +155,7 @@ const restorePasswordQuery = async (uuid) => {
 }
 
 const login = async (username, password) => {
-    const credentials = new URLSearchParams();
+    const credentials = new FormData();
     credentials.append("username" , username);
     credentials.append("password" , password);
     return await axios.post(
@@ -166,6 +166,10 @@ const login = async (username, password) => {
 }
 
 const register = async (username , password , email) => {
+    const data = new FormData();
+    data.append('username', username);
+    data.append('password', password);
+    data.append('email', email);
     return await axios.post(
         registerData.url,
         {
