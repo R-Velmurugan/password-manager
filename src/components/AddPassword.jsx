@@ -26,7 +26,7 @@ export default function AddPassword({addEditPasswordRef , refresh}){
             passwordRef,
             notesRef,
             UserCtx.username,
-            UserCtx.password
+            UserCtx.vaultKey
         ),
         onSuccess : () => {
             addEditPasswordRef.current.close()

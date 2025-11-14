@@ -6,6 +6,7 @@ import {Box, Button, Tooltip} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import UserContext from "../store/store";
 import {HttpStatusCode} from "axios";
+import {getWrappedKey, getVaultKey} from "../crypto/crypto";
 
 export default function Authentication() {
     const userNameRef = useRef();
@@ -18,13 +19,21 @@ export default function Authentication() {
     const UserCtx = useContext(UserContext);
     const [isLoginView , setIsLoginView] = useState(true);
     const [isUsernamePresent, setIsUsernamePresent] = useState(false);
+    const wk = getWrappedKey('bello');
+    // console.log(getVaultKey(wk, 'bello'));
+    wk.then(wrappedKey => console.log(wrappedKey));
+    wk.then(wrappedKey => {
+        let vaultKey = getVaultKey(wrappedKey, 'bello');
+        vaultKey.then(vk => console.log(vk));
+    });
+
     const loginMutation = useMutation({
         mutationFn : async () => {
             return await login(userNameRef.current.value, passwordRef.current.value);
         },
         onSuccess: () => {
             UserCtx.setUsername(userNameRef.current.value);
-            UserCtx.setPassword(passwordRef.current.value);
+            UserCtx.setVaultKey(passwordRef.current.value);
             navigate('/all-passwords');
         },
         onError: error => {
@@ -98,18 +107,18 @@ const Login = ({userNameRef , passwordRef , login , shouldRegister}) => {
 
 const Register = ({usernameRef , passwordRef , reTypedPassword , emailRef , register , shouldLogin, isUsernamePresent, setIsUsernamePresent}) => {
     const [errors, setErrors] = useState({
-        'password': false,
+        'vaultKey': false,
         'rePassword': false,
         'email': false
     })
     const [isDisabled, setIsDisabled] = useState(true);
     useEffect(() =>{
         console.log(isDisabled)
-        setIsDisabled(isUsernamePresent || errors.password || errors.rePassword || errors.email)
+        setIsDisabled(isUsernamePresent || errors.vaultKey || errors.rePassword || errors.email)
     }, [errors, isUsernamePresent])
     const tooltips = {
         username : "This username cannot be changed after registering. So pick a good one ;)",
-        password : "Rule of thumb is to have a min length of 10 and a mix of uppercase, lowercase, digits and special characters. Avoid using personal and predictable data",
+        vaultKey : "Rule of thumb is to have a min length of 10 and a mix of uppercase, lowercase, digits and special characters. Avoid using personal and predictable data",
         reEnteredPassword : "This is to make sure that you are entering the wanted password without a typo",
         email : "For authentication and notification purposes."
     }
@@ -120,7 +129,7 @@ const Register = ({usernameRef , passwordRef , reTypedPassword , emailRef , regi
     const handlePasswordChange = (event) => {
         setErrors({
             ...errors,
-            password: !isValidPassword(event.target.value),
+            vaultKey: !isValidPassword(event.target.value),
             rePassword: !isRePasswordMatchingPassword(event.target.value, reTypedPassword.current.value)})
     }
     const handleRePasswordChange = (event) => {
@@ -141,7 +150,7 @@ const Register = ({usernameRef , passwordRef , reTypedPassword , emailRef , regi
                        onChange={handleUsernameChange}/>
             </Tooltip>
             {isUsernamePresent && <p className="text-red-600">Username already exists</p>}
-            <Tooltip title={tooltips.password} placement="left">
+            <Tooltip title={tooltips.vaultKey} placement="left">
                 <Input ref={passwordRef} className="text-stone-200"
                        extraStyles="!bg-black border border-solid border-slate-800 text-stone-200 placeholder-gray-500"
                        label="Password"
@@ -149,7 +158,7 @@ const Register = ({usernameRef , passwordRef , reTypedPassword , emailRef , regi
                        type="password"
                        onChange={handlePasswordChange}/>
             </Tooltip>
-            {errors.password && <p className="text-red-600">Password did not match the requirements</p>}
+            {errors.vaultKey && <p className="text-red-600">Password did not match the requirements</p>}
             <Tooltip title={tooltips.reEnteredPassword} placement="right">
                 <Input ref={reTypedPassword} className="text-stone-200"
                        extraStyles="!bg-black border border-solid border-slate-800 text-stone-200 placeholder-gray-500"

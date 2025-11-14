@@ -2,9 +2,9 @@ import {createContext} from "react";
 
 const UserContext = createContext({
     username : "",
-    password : "",
+    vaultKey : "",
     setUsername : (username) => {},
-    setPassword : (password) => {}
+    setVaultKey : (password) => {}
 });
 
 

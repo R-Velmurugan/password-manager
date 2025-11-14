@@ -20,7 +20,7 @@ const fetchAllPasswords = async (isActive, username, password) => {
             variables : {
                 isActive,
                 username,
-                password
+                vaultKey: password
             }
         },
         getPasswords.config
@@ -40,7 +40,7 @@ const insertPassword = async (domainNameRef , urlRef , usernameRef , emailRef , 
                         "url": urlRef.current.value,
                         "username": usernameRef.current.value,
                         "email": emailRef.current.value,
-                        "password": passwordRef.current.value,
+                        "vaultKey": passwordRef.current.value,
                         "notes": notesRef.current.value,
                         uname,
                         masterPassword
@@ -63,12 +63,12 @@ const fetchPasswordByID = async (uuid , username , password) => {
                 {
                     uuid,
                     username,
-                    password
+                    vaultKey: password
                 }
         },
         getPassword.config
     )
-    return response.data.data.password;
+    return response.data.data.vaultKey;
 }
 
 const fetchExpiredPasswordsForNotification = async (type , username) => {
@@ -127,7 +127,7 @@ const updatePasswordQuery = async (uuid , password) => {
                 query : updatePassword.query,
                 variables : {
                     "uuid" : uuid,
-                    "password" : password
+                    "vaultKey" : password
                 }
             },
             updatePassword.config
@@ -174,7 +174,7 @@ const register = async (username , password , email) => {
         registerData.url,
         {
             username : username,
-            password : password,
+            vaultKey : password,
             email : email
         }
     )

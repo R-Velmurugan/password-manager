@@ -18,7 +18,7 @@ export default function AllPasswords(){
 
     const {data , isLoading , isError,refetch} = useQuery({
         queryKey : ["passwords"],
-        queryFn : () => fetchAllPasswords(true, UserCtx.username, UserCtx.password)
+        queryFn : () => fetchAllPasswords(true, UserCtx.username, UserCtx.vaultKey)
     })
 
     const addPasswordRef = useRef();

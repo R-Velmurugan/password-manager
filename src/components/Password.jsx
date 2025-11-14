@@ -12,7 +12,7 @@ export default function Password({uuid , setUuid}){
 
     const {data , isLoading , isError} = useQuery({
         queryKey : ["password" , uuid],
-        queryFn : () => fetchPasswordByID(uuid , UserCtx.username , UserCtx.password),
+        queryFn : () => fetchPasswordByID(uuid , UserCtx.username , UserCtx.vaultKey),
         enabled : !!uuid
     })
 
@@ -66,9 +66,9 @@ export default function Password({uuid , setUuid}){
                         <span className="col-span-1">Password</span>
                         <span className="flex align-middle col-span-2" >
                             <input className="disabled caret-transparent focus:outline-none border-none "
-                                   type="password" value={data.password}/>
+                                   type="password" value={data.vaultKey}/>
                             <lord-icon src="https://cdn.lordicon.com/lyrrgrsl.json" trigger="click"
-                                       onClick={() => navigator.clipboard.writeText(data.password)}>
+                                       onClick={() => navigator.clipboard.writeText(data.vaultKey)}>
                             </lord-icon>
                         </span>
 

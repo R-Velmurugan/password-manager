@@ -44,7 +44,7 @@ export default function EditPassword({uuid , setEditPasswordUuid , refresh}){
             })
         }
         else{
-            if(decodePassword(data.password) !== currentPasswordRef.current.value){
+            if(decodePassword(data.vaultKey) !== currentPasswordRef.current.value){
                 setError({
                     css: "border-red-600",
                     errorMessage: "Entered password does not match existing password"
